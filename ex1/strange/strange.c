@@ -118,9 +118,13 @@ int main() {
 
     printf("ASSIGNMENT 9: LISTS OF STRINGS\n");
 
-    char *array_of_strings[6] = {"monkey", "banana", "take", "angry", "trouble"};
-
-    printf("The strings are: %s\n", *array_of_strings);
+    char *array_of_strings[6] = {"monkey", "banana", "take", "angry", "trouble", "\n"};
+	
+    printf("The strings are: ");
+	for (i=0;i<6;i++) 
+	{
+		printf("%s ", array_of_strings[i]);
+	}
     printf("\n");
 
 
