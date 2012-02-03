@@ -771,7 +771,7 @@ void* ClientThreadFunc(void * pargs)
 			hints.ai_socktype = SOCK_STREAM;
 			hints.ai_protocol = IPPROTO_TCP;
 
-			if(getaddrinfo("localhost", "9009", &hints, &result) == SOCKET_ERROR)
+			if(getaddrinfo("127.0.0.1", "9009", &hints, &result) == SOCKET_ERROR)
 			{
 				// If error - exit!
 				return NULL;
@@ -1025,7 +1025,7 @@ int main(int argc, char** argv)
 	// We won't implement a signal handler, so we'll just tell the OS to ignore the signal!
 	// The same can be achieved by setting MSG_NOSIGNAL flag in send() call like this
 	// send(sck, data, len, MSG_NOSIGNAL)
-	signal(SIGPIPE, SIG_IGN);
+	//signal(SIGPIPE, SIG_IGN);
 
 	// If the application was started with the command line parameter "SERVER"
 	// Start Server!

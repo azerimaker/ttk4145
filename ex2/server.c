@@ -12,87 +12,111 @@
 
 int main(int argc, char *argv[])
 {
-	struct addrinfo hints;
-	struct addrinfo *results, *rp;
-	int sfd, s;
-	struct sockaddr_storage peer_addr;
-	socklen_t peer_addr_len;
-	ssize_t nread;
-	char buf[BUF_SIZE];
-	
+    SOCKET = ListenSocket;
+    SOCKET = AcceptSocket;
+    int retVal;
+    BOOL fFound = FALSE;
+    
+    int mode = 1;
+    
+    // Address info structures
+    struct addrinfo *result = NULL;
+    struct addrinfo *ptr = NULL;
+    struct addrinfo hints;
+    
 	if (argc != 2) 
 	{
 		fprintf(stderr, "Usage: %s port\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	
-	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = AF_UNSPEC;	/* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_DGRAM;	/* Datagram socket */
-	hints.ai_flags = AI_PASSIVE;	/* For wildcard IP address */
-	hints.ai_protocol = 0;			/* Any protocol */
-	hints.ai_canonname = NULL;
-	hints.ai_addr = NULL;
-	hints.ai_next = NULL;
+	memset(&hints, 0, sizeof(struct addrinfo)); /* Initialize to 0 */
+	hints.ai_family = AF_UNSPEC;	            /* Allow IPv4 or IPv6 */
+	hints.ai_socktype = SOCK_STREAM;	        /* Stream socket */
+	hints.ai_flags = AI_PASSIVE;	            /* For wildcard IP address */
+	hints.ai_protocol = IPPROTO_TCP;	        /* TCP protocol */
 	
-	s = getaddrinfo(NULL, argv[1], &hints, &results);
-	if (s != 0) 
+	retVal = getaddrinfo(NULL, argv[1], &hints, &results);
+	if (retVal != 0) 
 	{
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+		fprintf("getaddrinfo failed with error code: %d\n", retVal);
 		exit(EXIT_FAILURE);
 	}
 	
 	/* getaddrinfo() returns a list of address structures.
-       Try each address until we successfully bind(2).
-       If socket(2) (or bind(2)) fails, we (close the socket
-       and) try the next address. */
-       
-	for (rp = results; rp != NULL; rp = rp->ai_next) 
+       Try each address until we successfully bind.
+       If socket (or bind) fails, we close the socket
+       and try the next address. */
+	for (ptr = result; ptr != NULL; ptr = ptr->ai_next) 
 	{
-		sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-		if (sfd == -1)
+		ListenSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+		if (ListenSocket == INVALID_SOCKET)
+		    printf("Socket failed with error: %s\n", strerror(errno));
 			continue;
-			
-		if (bind(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
-			break;					/* Success */
-			
-		close(sfd);
-	}
-	
-	if (rp == NULL) 				/* No address succeeded */
-	{
-		fprintf(stderr, "Could not bind\n");
-		exit(EXIT_FAILURE);
-	}
-	
-	freeaddrinfo(results);			/* No longer needed */
-	
-	/* Read datagrams and echo them back to sender */
-	
-	for (;;) {
-		peer_addr_len = sizeof(struct sockaddr_storage);
-		nread = recvfrom(sfd, buf, BUF_SIZE, 0, 
-				(struct sockaddr *) &peer_addr, &peer_addr_len);
-		if (nread == -1)
-			continue;				/* Ignore failed request */
 		
-		char host[NI_MAXHOST], service[NI_MAXSERV];
+		// Allow the port to be reused even if it is busy (TIME WAIT State)
+		setsocopt(ListenSocket, SOL_SOCKET, SO_REUSEADDR, &mode, sizeof(mode));
 		
-		s = getnameinfo((struct sockaddr *) &peer_addr,
-						peer_addr_len, host, NI_MAXHOST,
-						service, NI_MAXSERV, NI_NUMERICSERV);
-		
-		if (s == 0)
-			printf("Received %ld bytes from %s:%s\n", 
-					(long) nread, host, service);
+		// Make the connection - socket address mapping	
+		if (bind(ListenSocket, ptr->ai_addr, ptr->ai_addrlen) == 0)
+		{
+			break;					    /* Success */
+		}
 		else
-			fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
-		
-		if (sendto(sfd, buf, nread, 0,
-					(struct sockaddr *) &peer_addr,
-					peer_addr_len) != nread)
-			fprintf(stderr, "Error sending response\n");
+		{
+		    printf("Bind failed with error: %s\n", strerror(errno));	
+		    continue;
+		}
+		close(ListenSocket);
 	}
+	
+	// Listen for incoming connection requests on the created socket
+	if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR) {
+	    printf("listen failed with error: %s\n", strerror(errno));
+	    closesocket(ListenSocket);
+	    return NULL;
+	}
+	
+	// Create a socket for accepting incoming requests
+	printf("Waiting or client to connect...\n");
+	
+	// Accept the connections
+	// If you have a connection request, accept it, and create a new thread
+	// to handle it
+	
+	while(1)
+	{
+	    AcceptSocket = accept(ListenSocket, NULL, NULL);
+	    if (AcceptSocket == INVALID_SOCKET)
+	    {
+	        printf("accept failed with error: %s\n", strerror(errno));
+	        close(ListenSocket);
+	        
+	        return NULL;
+	    }
+	    else
+	    {
+	        SOCKET* p;
+	        pthread_t* pNewThread;
+	        printf("Client connected\n");
+	        p = (SOCKET*)malloc(sizeof(SOCKET));
+	        pNewThread = (pthread_t*)malloc(sizeof(pthread_t));
+	        *p = AcceptSocket;
+	        
+	        // Create thread and pass the SOCKET pointer as a paramter
+	        
+	        pthread_create(pNewThread, NULL, ServeClient, p);
+	        
+	    }
+	}
+	
+	// No longer need server socket
+	close(ListenSocket);
+    freeaddrinfo(result);	
+	return NULL;
+
 }
+	        
+	       
 		
 
