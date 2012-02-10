@@ -17,6 +17,15 @@ procedure fibonacci is
     N:INTEGER;
 begin
     Put("enter n");
-    Get(N);
-    Put(fib(N));
+    begin
+        Get(N);
+    exception when Data_Error =>
+            Ada.Text_IO.Put ("Only numbers!");
+    end;
+    if N>40 then
+        Put("N to big");
+    else 
+        Put(fib(N));
+    end if;
 end fibonacci;
+
