@@ -1,9 +1,9 @@
 V "GNAT Lib v4.4"
 M P W=b
 P SS ZX
-R nnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+R nnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 
-U fib%b			fib.adb			19476253 NE OO SU IL
+U fibonacci%b		fib.adb			7b75c7e9 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
@@ -19,7 +19,7 @@ D a-tags.ads		20090409232307 bfa07446
 D a-textio.ads		20090409232307 fe8af46e
 D a-tiinio.ads		20090409232307 949a7272
 D a-unccon.ads		20070406091342 51e09df2
-D fib.adb		20120210112838 e471e541
+D fib.adb		20120210120114 864340fb
 D interfac.ads		20090409232307 a69cad5c
 D i-cstrea.ads		20090409232307 e1e064a9
 D system.ads		20110606223802 df55302f
@@ -45,12 +45,13 @@ X 5 a-inteio.ads
 18K13*Integer_Text_IO[10|45] 12|1w23 2r22
 X 9 a-textio.ads
 48K13*Text_IO 506e16 12|1w10 2r9
-166U14*New_Line 12|12r5 16r5
-242U14*Put 12|9r5 14r5
+242U14*Put 12|19r5
 X 10 a-tiinio.ads
-55U14*Get 12|10r5[5|18]
-65U14*Put 12|11r5[5|18] 15r5[5|18]
+55U14*Get 12|20r5[5|18]
+65U14*Put 12|21r5[5|18]
 X 12 fib.adb
-4U11*fib 4b11 17l5 17t8
-6i5 n{integer} 10m9 11r9 13m5 13r10 15r9
+4U11*fibonacci 4b11 22l5 22t14
+5V14 fib{integer} 5b14 5>19 12r21 12r38 12r56 14r20 14r34 16l9 16t12 21r9
+5i19 N{integer} 7r12 8r20 9r15 11r15 12r27 12r44 12r60 14r24 14r38
+17i5 N{integer} 20m9 21r13
 
