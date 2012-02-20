@@ -7,9 +7,8 @@ procedure Tasking is
    task body Hello is
    begin
      loop
-	Put("This is in First_Task, pass number ");
-	New_Line;
-	delay 1.0;
+	    Put_Line("Hello");
+	    delay 1.0;
      end loop;
    end Hello;
 
@@ -17,12 +16,11 @@ procedure Tasking is
    task body World is
    begin
      loop
-         Put("This is in Second_Task, pass number");
-         New_Line;
-	 delay 2.0;
+         Put_Line("World");
+	     delay 2.0;
      end loop;
    end World;
 
 begin
-    Put(" ");
+    null;
 end Tasking;
