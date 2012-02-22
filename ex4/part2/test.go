@@ -15,15 +15,22 @@ import (
    process could continue to run. And clear the flag of the processes in the right order. 
 */
 	
+	
+/* If the server can read data from the input channel, it proceeds with adding
+   the received value to the output value and putting it on the output channel
+   If not, it yields the CPU
+*/	
 func server(serverInputChannel, serverOutputChannel chan int) {
 	outputValue := 0
 	serverOutputChannel <- outputValue
 	for {
-		time.Sleep(1*1e9)
-		inputValue := <- serverInputChannel 
-		outputValue += inputValue
-		serverOutputChannel <- outputValue
-		runtime.Gosched()
+		select {
+		case inputValue := <- serverInputChannel:
+			outputValue += inputValue
+			serverOutputChannel <- outputValue
+		default:
+			runtime.Gosched()
+		}
 	} 
 }
 	
@@ -43,24 +50,27 @@ func main() {
 }
 
 func client1(serverInputChannel chan int) {
-	for  j:=0;j<1000;j++{
+	for  j:=0;j<10;j++{
 		myVar := 2
 		serverInputChannel <-myVar
 	}
+	print("Client 1 is done!")
 }
 
 func client2(serverInputChannel chan int) {
-	for  j:=0;j<1000;j++{
+	for  j:=0;j<10;j++{
 		myVar := -1
 		serverInputChannel <- myVar
 	}
+	print("Client 2 is done!")
 }	
 
 func client3(serverInputChannel chan int) {
-	for  j:=0;j<1000;j++{
+	for  j:=0;j<10;j++{
 		myVar := 3
 		serverInputChannel <- myVar
 	}
+	print("Client 3 is done!")
 }
 
 func read(serverOutputChannel chan int) {
