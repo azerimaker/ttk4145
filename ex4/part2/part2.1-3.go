@@ -20,7 +20,7 @@ func server(serverInputChannel  chan int) {
 	outputValue := 0
 	fmt.Println("Server started. Initial output is ", outputValue)
 	for {
-		time.Sleep(1*1e9)
+		time.Sleep(1*1e1)
 		inputValue := <- serverInputChannel 
 		outputValue += inputValue
 		fmt.Println("This is servers output", outputValue, "it got this as input", inputValue)
@@ -30,8 +30,8 @@ func server(serverInputChannel  chan int) {
 	
 func main() {
 	serverInputChannel := make(chan int, 1)
-	go server(serverInputChannel)
 	go client1(serverInputChannel)
+	go server(serverInputChannel)
 	go client2(serverInputChannel)
 	go client3(serverInputChannel)
 	for {
@@ -41,21 +41,21 @@ func main() {
 }
 
 func client1(serverInputChannel chan int) {
-	for  j:=0;j<10;j++{
+	for  j:=0;j<100;j++{
 		myVar := 2
 		serverInputChannel <-myVar
 	}
 }
 
 func client2(serverInputChannel chan int) {
-	for  j:=0;j<10;j++{
+	for  j:=0;j<100;j++{
 		myVar := -1
 		serverInputChannel <- myVar
 	}
 }	
 
 func client3(serverInputChannel chan int) {
-	for  j:=0;j<10;j++{
+	for  j:=0;j<100;j++{
 		myVar := 3
 		serverInputChannel <- myVar
 	}

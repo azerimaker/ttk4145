@@ -38,7 +38,7 @@ func server(serverInputChannel, serverOutputChannel chan int) {
 	
 func main() {
 	serverInputChannel := make(chan int, 1)	// buffered channel
-	serverOutputChannel := make(chan int)		
+	serverOutputChannel := make(chan int, 1)		
 	go server(serverInputChannel, serverOutputChannel)
 	go client1(serverInputChannel)
 	go client2(serverInputChannel)
