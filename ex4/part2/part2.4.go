@@ -2,7 +2,7 @@ package main
 
 import (
 	"runtime"
-	"time"
+//	"time"
 	"fmt"
 )
 /* Informal proof: A send on a channel happens before the corresponding receive
@@ -52,33 +52,33 @@ func main() {
 }
 
 func client1(serverInputChannel chan int) {
+	myVar := 2
 	for  j:=0;j<10;j++{
-		myVar := 2
 		serverInputChannel <-myVar
 	}
-	fmt.Println("Client 1 is done!")
+//	fmt.Println("Client 1 is done!")
 }
 
 func client2(serverInputChannel chan int) {
+	myVar := -1
 	for  j:=0;j<10;j++{
-		myVar := -1
 		serverInputChannel <- myVar
 	}
-	fmt.Println("Client 2 is done!")
+//	fmt.Println("Client 2 is done!")
 }	
 
 func client3(serverInputChannel chan int) {
+	myVar := 3
 	for  j:=0;j<10;j++{
-		myVar := 3
 		serverInputChannel <- myVar
 	}
-	fmt.Println("Client 3 is done!")
+//	fmt.Println("Client 3 is done!")
 }
 
 func read(serverOutputChannel chan int) {
 	for {
 		out := <- serverOutputChannel
 		fmt.Println(out," ")
-		time.Sleep(1*1e9)
+//		time.Sleep(1*1e1)
 	}
 }
