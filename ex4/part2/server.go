@@ -1,21 +1,21 @@
 package main
 
-import "fmt"
+var i int;
 
-var i = 0;
+func set(c chan int) {
+    no := <- c
+    if no != i {
+        i = no;
+        c <- i;
+    }
+}
 
+func get(c chan int){
+    c <- i;
+}
 
 func main(){
-    var a int = 0;
-//    set(a);
-//    fmt.Println(get());
-}
-
-func get() (int){       
-    return i;
-}
-
-func set(new int){
-    i = new;
-    fmt.Println(i);
+	c := make(chan int)
+	go set(c);
+    go get(c);
 }
