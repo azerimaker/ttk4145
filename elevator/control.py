@@ -17,9 +17,10 @@ ELEVATORS = {}
                         
 from time import time
 
-
-# go through job list to see if any available jobs in same direction
-# as the elevator is headed, if so, add them to current job list
+'''
+go through job list to see if any available jobs in same direction
+as the elevator is headed, if so, add them to current job list
+'''
 def get_jobs():
     if DIRECTION == 'UP':
         for job in GOING_UP:
@@ -29,9 +30,10 @@ def get_jobs():
         for job in GOING_DOWN:
             if job <= current_floor:
                 CURRENT_JOBS.add(job)         
-
-# when passing a floor, check if there are people waiting on the next floor
-# if there are, raise flag so the elevator stops when reaching the floor
+'''
+when passing a floor, check if there are people waiting on the next floor
+if there are, raise flag so the elevator stops when reaching the floor
+'''
 def check_next_floor():
     if CURRENT_FLOOR+1 in CURRENT_JOBS:
         STOP_NEXT = True
@@ -43,10 +45,21 @@ def check_others:
         if (currentTime - value) < 3:
             continue
         else:
+            # TODO:
             # elevator[key] is dead! DO SOMETHING!
             # add the dead elevators job list to private list
             # send private list to other elevators
             
+'''
+listen for other elevators
+add these to system overview
+'''            
+def listen():
+    # TODO
     
 
+'''
+Start the elevator
+'''
+def start():
     

@@ -5,7 +5,7 @@ INITIALIZE ELEVATOR:
         GLOBAL_GOING_DOWN = set()  # SEPERATE LISTS FOR EACH ELEVATOR?
         MY_GOING_UP = set()           
         MY_GOING_DOWN = set()         
-        CURRENT_JOBS = set()       
+        CURRENT_JOBS = set()     # the jobs this elevator can pick up on it's way to it's destination.   
         DIRECTION = ''          
         CURRENT_FLOOR = Do we get this from the driver?           
         STOP_NEXT = False
