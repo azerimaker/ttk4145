@@ -1,0 +1,15 @@
+INITIALIZE ELEVATOR:
+
+    Create datastructures 
+        GLOBAL_GOING_UP = set()    
+        GLOBAL_GOING_DOWN = set()  
+        GOING_UP = set()           
+        GOING_DOWN = set()         
+        CURRENT_JOBS = set()       
+        DIRECTION = ''          
+        CURRENT_FLOOR = Do we get this from the driver?           
+        STOP_NEXT = False
+    
+    Broadcast "I'm here! This is me!"
+    
+    If other elevators are online, add these to system overview              

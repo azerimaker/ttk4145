@@ -1,0 +1,6 @@
+SYSTEM OVERVIEW
+    contains all information about the current system state
+    new elevators that come online are added here, with list of their jobs
+    keeps a list of elevators and their last still-alive-signal as a tuple
+        example: ([(elevator1, 18:37:21), (elevator2, 18:37:20)])
+    
