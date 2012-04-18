@@ -10,9 +10,18 @@ SYSTEM OVERVIEW:
 # Controls the elevator        
 CONTROLLER:
     - Takes care of I/O with the driver
-    - 
+    - Check time since last alive-messages
+        * if manager is offline
+            - compare own age against all others, if oldest becomes manager
+        * if other elevators offline
+            - remove from list of elevators
+    - Move up
+    - Move down
+    - Stop
+    - Start
+    - Let people on/off
     
-# Object representing an order    
+# Represents an order   
 ORDER:
     int floor
     String direction
@@ -27,7 +36,19 @@ ELEVATOR:
 
 # Represents a message
 MESSAGE:
-    
+    - New order (broadcast to all)
+    - Order from manager (send to one elevator, which executes order)
+    - Still-alive
+    - Job done
+    - Obstructed
+    - Elevator state
+
+# Handles the communication
+NETWORK:
+    - broadcast still-alive
+    - receive still-alive
+    - receive orders
+    - if elevator is manager; send out orders
 
 # Runs at start up, sets up everything
 INITIALIZE_ELEVATOR:
