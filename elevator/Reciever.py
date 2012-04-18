@@ -47,8 +47,9 @@ class UDPReceiver( threading.Thread ):
             # Receive data
             while 1:
                 data = connection.recv(2 ** 16)
-                #print 'Received: %s' % str(data)
-                self.messageHandler.evaluateCommand(data)
+                ip = connection.getsockname
+                print 'Received: %s' % str(data)
+                self.messageHandler.evaluateCommand(ip, data)
                 # Acknowledge reception of data
                 r = 'ACK\n'
                 connection.send(r)
