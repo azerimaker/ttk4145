@@ -7,22 +7,22 @@ __author__ = 'kiro'
 class DataStore():
 
     def __init__(self):
+
         self.elevatorList = []
-        self.workQueue = []
+        self.workTable = [][]
 
     def newElevator(self):
         self.elevatorList.append("elevator")
         print "adds a new elevator to the list of elevators. this is necessary for sending delegating work later. "
 
-    def newWork(self, work):
-        self.workQueue.append(work)
-
-        # to be removed.
-        self.workQueue.append("F01D04")
-        print "adds a new job to the work list."
+    def newWork(self, work, elevator):
+        print "figure out the nicities of this"
+        direction = "U/D"
+        floor = "1-4"
+        self.workTable[direction][floor] = elevator
 
     def getWork(self):
-        return self.workQueue
+        return self.workTable
 
     def getElevators(self):
         return self.elevatorList
