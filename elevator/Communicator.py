@@ -1,8 +1,5 @@
-from time import sleep
-from Main import Main
 from Sender import Sender
 from Reciever import Receiver
-from MessageHandler import messageHandler
 
 __author__ = 'kiro'
 
@@ -10,7 +7,7 @@ class Communicator():
 
     elevators = []
 
-    def __init__(self, messageHandler):
+    def __init__(self, messageHandler, dataStore):
 
         # my ip is the ip of this computer.
         # 5005 is the standard port for communication.
@@ -19,23 +16,20 @@ class Communicator():
 
         self.sender = Sender("78.91.5.168", "")
 
-    def addElevator(self, elevator):
-        self.elevators.append(elevator)
+        self.dataStore = dataStore
 
     # TODO: needs to be figured out.
-    def sending(self, message, ip, port):
-        sender = Sender(ip, port)
+    def send(self, elevator, message):
+        sender = Sender(elevator.IP, elevator.Port)
         sender.send(message)
 
-    def send(self):
-        for i in range(1, 10):
+    def sendToAll(self, message):
+        for elevator in self.dataStore.getElevators():
+            self.send(elevator, message)
 
-            self.sender.send("test"+str(i))
-            sleep(1)
 
 # test code for this class.
-# remember to remove import Main from Main
-main = Main()
-m = messageHandler(main)
-com = Communicator(m)
-com.send()
+#main = Main()
+#m = messageHandler(main)
+#com = Communicator(m)
+#com.send()

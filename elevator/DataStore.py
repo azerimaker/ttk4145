@@ -23,3 +23,6 @@ class DataStore():
 
     def getWork(self):
         return self.workQueue
+
+    def getElevators(self):
+        return self.elevatorList
