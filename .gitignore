@@ -1,6 +1,4 @@
-#folders
-.idea/*
+.idea
 
-
-#files
 *.out
+*.pyc
