@@ -13,7 +13,7 @@ class Communicator():
 
         # my ip is the ip of this computer.
         # 5005 is the standard port for communication.
-        self.receiver = UDPReceiver("78.91.5.168", 5005, messageHandler)
+        self.receiver = UDPReceiver("78.91.23.120", 5005, messageHandler)
         self.receiver.start()
 
         self.sender = UDPSender("78.91.5.168", "")

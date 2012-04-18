@@ -37,5 +37,5 @@ class UDPSender:
 
 
 # test code for running only this file.
-#a = UDPSender("78.91.5.168", "")
-#a.send("testing")
+a = UDPSender("78.91.5.168", "")
+a.send("testing")
