@@ -8,3 +8,11 @@ class Main():
 
     def setManagerState(self, state):
         self.managerState = state
+
+    # thread
+        # if self.state[0] != "T":
+            # communicator.send("T-----")
+            # createManager()
+
+    def createManager(self):
+        print "we are now the manager, Wohoo!"

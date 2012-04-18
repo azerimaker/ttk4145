@@ -18,6 +18,7 @@ class messageHandler():
         helloWorld = ""
         doWork = ""
 
+
         state    = "01D01"
         request  = "--U03"
         work     = "01U02"
@@ -29,9 +30,8 @@ class messageHandler():
 
         # command sorter.
         if command == state:
-            if state[0] == True:
+            if state[0] == "T":
                 self.main.setManagerState()
-            print command
         elif command == request:
             print command
         elif command == work:
