@@ -1,10 +1,45 @@
+# Class to hold data about the system state
+# Every elevator has one, and they should be identical
 SYSTEM OVERVIEW:
-    contains all information about the current system state
     new elevators that come online are added here, with list of their jobs
         ([(elevator1, [list up], [list down])])
     keeps a list of elevators and their last still-alive-signal as a tuple
         example: ([(elevator1, 18:37:21), (elevator2, 18:37:20)])
         
+        
+# Controls the elevator        
 CONTROLLER:
-    controls the elevator
+    - Takes care of I/O with the driver
+    - 
+    
+# Object representing an order    
+ORDER:
+    int floor
+    String direction
+    
+    
+# Object representing an elevator
+ELEVATOR:
+    - Needs to know it's own IP
+    - Keep track of state (going up or down, idle or obstructed)
+    - Networking part, ability to send and receive orders and messages
+    
+
+# Represents a message
+MESSAGE:
+    
+
+# Runs at start up, sets up everything
+INITIALIZE_ELEVATOR:
+    - Set everything up: elevator-, controller-class etc.
+    - get networking part up and running
+    - check that everything works
+    - broadcast it's existence and wait for orders
+
+# First elevator that comes online becomes the manager
+# If manager goes offline, oldest elevator takes over    
+MANAGER:
+    - When a new job arrives, finds the elevator best suited to handle it
+    
+    
     
