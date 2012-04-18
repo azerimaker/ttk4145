@@ -1,0 +1,2 @@
+DRINK = (coffee -> milk -> sugar -> COFFEE | tea -> milk -> sugar -> DRINK),
+COFFEE = (milk -> sugar -> COFFEE).
