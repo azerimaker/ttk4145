@@ -1,5 +1,6 @@
 import socket
 import threading
+from time import sleep
 
 __author__ = 'kiro'
 
@@ -7,12 +8,24 @@ class UDPReceiver( threading.Thread ):
     UDP_IP="127.0.0.1"
     UDP_PORT=5005
 
-    def __init__(self, ip):
+    def __init__(self, ip, port, messageHandler):
+        # initialize the thread.
         super(UDPReceiver, self).__init__()
-        if ip == "":
+
+        # Set the ip to default or given value.
+        if ip=="":
             self.UDP_IP = "127.0.0.1"
         else:
             self.UDP_IP = ip
+
+        # Set the port to default or given value.
+        if not port:
+            self.UDP_PORT = 5005
+        else:
+            self.UDP_PORT = port
+
+        self.messageHandler = messageHandler
+
         print "RECEIVER initialized"
         print "UDP target IP:", self.UDP_IP
         print "UDP target port:", self.UDP_PORT
@@ -24,8 +37,12 @@ class UDPReceiver( threading.Thread ):
         sock.bind( (self.UDP_IP,self.UDP_PORT) )
 
         while True:
-            print "receiving"
             data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
-            if data[0]=="5":
-                print "number 5"
             print "received message:", data
+            # messageHandler.evaluateCommand(data)
+            sleep(1)
+
+
+# test code for running only this file.
+#a = UDPReceiver("78.91.5.168")
+#a.receive()
