@@ -13,9 +13,11 @@ class Main():
 
     def __init__(self):
         print "main init"
-        isManagerCheck()
 
-    # see if there is still a manager
+        self.managerState = "F"
+
+        # see if there is still a manager
+        isManagerCheck(self).start()
 
     def setManagerState(self, state):
         self.managerState = state
@@ -26,10 +28,6 @@ class Main():
 
 
 class isManagerCheck( threading.Thread ):
-    # thread
-    # if self.state[0] != "T":
-    # communicator.send("T-----")
-    # createManager()
 
     def __init__(self, main):
         super.super(isManagerCheck, self).__init__()
