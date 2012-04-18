@@ -28,12 +28,27 @@ ORDER:
     String direction
     
     
-# Object representing an elevator
+# Elevator class
 ELEVATOR:
     - Needs to know it's own IP
     - Keep track of state (going up or down, idle or obstructed)
     - Networking part, ability to send and receive orders and messages
-    
+
+
+# Object representing online elevator    
+PEER:
+    - Data fields
+        * IP
+        * status
+        * manager
+        * last alive
+        * age
+        * jobs
+    - Getters/Setters
+        * last alive
+        * IP
+        * status
+        * manager
 
 # Represents a message
 MESSAGE:
