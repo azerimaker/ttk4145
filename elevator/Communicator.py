@@ -1,7 +1,7 @@
 from time import sleep
 from Sender import Sender
 from Reciever import Receiver
-from messageHandler import messageHandler
+from MessageHandler import messageHandler
 
 __author__ = 'kiro'
 
