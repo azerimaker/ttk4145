@@ -1,4 +1,5 @@
 from time import sleep
+from Main import Main
 from Sender import Sender
 from Reciever import Receiver
 from MessageHandler import messageHandler
@@ -33,6 +34,8 @@ class Communicator():
             sleep(1)
 
 # test code for this class.
-m = messageHandler()
+# remember to remove import Main from Main
+main = Main()
+m = messageHandler(main)
 com = Communicator(m)
 com.send()
