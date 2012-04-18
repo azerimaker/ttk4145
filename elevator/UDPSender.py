@@ -1,38 +1,41 @@
-import socket
+from socket import *
 
 __author__ = 'kiro'
 
 class UDPSender:
-    UDP_IP = ""
-    UDP_PORT = 0
+    recipientHost = ""
+    recipientPort = 0
 
     def __init__(self, ip, port):
         # Set the ip to default or given value.
         if ip=="":
-            self.UDP_IP = "127.0.0.1"
+            self.recipientHost = "127.0.0.1"
         else:
-            self.UDP_IP = ip
+            self.recipientHost = ip
 
         # Set the port to default or given value.
-        if port=="":
-                self.UDP_PORT = 5005
+        if not port:
+                self.recipientPort = 5005
         else:
-            self.UDP_PORT = port
+            self.recipientPort = port
 
         print "SENDER initialized"
-        print "UDP target IP:", self.UDP_IP
-        print "UDP target port:", self.UDP_PORT
+        print "UDP target IP:", self.recipientHost
+        print "UDP target port:", self.recipientPort
 
     def send(self, message):
 
         print "message:", message
 
-        sock = socket.socket( socket.AF_INET, # Internet
-            socket.SOCK_DGRAM ) # UDP
+        sock = socket(AF_INET, SOCK_STREAM)
+        sock.connect((self.recipientHost, self.recipientPort))
 
-        sock.sendto( message, (self.UDP_IP, self.UDP_PORT) )
+        sock.send(message)
+        #sock.send( message, (self.recipientHost, self.recipientPort) )
+
+        sock.close()
 
 
 # test code for running only this file.
-#a = UDPSender("78.91.5.168")
+#a = UDPSender("78.91.5.168", "")
 #a.send("testing")
