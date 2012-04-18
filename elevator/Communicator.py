@@ -1,6 +1,7 @@
 from time import sleep
-from UDPSender import UDPSender
-from UDPReciever import UDPReceiver
+from Sender import UDPSender
+from Reciever import UDPReceiver
+from messageHandler import messageHandler
 
 __author__ = 'kiro'
 
@@ -26,6 +27,7 @@ class Communicator():
             self.sender.send("test"+str(i))
             sleep(1)
 
-# test code for this class. 
-#com = Communicator("")
-#com.send()
+# test code for this class.
+m = messageHandler()
+com = Communicator(m)
+com.send()
