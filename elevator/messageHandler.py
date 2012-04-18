@@ -5,8 +5,8 @@ class messageHandler():
     def __init__(self):
         self.name="hei"
 
-    def evaluateCommand(self, ip, command):
-        command = "elevator" + "direction" + "floor"
+    def evaluateCommand(self, ip, port, command):
+        com = "elevator" + "direction" + "floor"
         regex = "[1-9][1-9]" + "[UD]" + "[1-9][1-9]"
         state    = "01D01"
         request  = "--U03"
@@ -14,7 +14,8 @@ class messageHandler():
         complete = "03---"
         alive    = "00---"
         newManager = ""
-        print "msgH: command: ", command
+
+        # command sorter.
         if command == state:
             print command
         elif command == request:
@@ -26,4 +27,4 @@ class messageHandler():
         elif command == alive:
             print command
         else:
-            print "not valid: " + command
+            print "Command not valid! - " + ip + ":" + str(port) + " com: " + command

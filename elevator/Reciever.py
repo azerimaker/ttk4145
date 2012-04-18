@@ -7,13 +7,13 @@ from time import sleep
 
 __author__ = 'kiro'
 
-class UDPReceiver( threading.Thread ):
+class Receiver( threading.Thread ):
     serverHost="127.0.0.1"
     serverPort=5005
 
-    def __init__(self, ip, port, messageHandler):
+    def __init__(self, ip="127.0.0.1", port=5005, messageHandler=""):
         # initialize the thread.
-        super(UDPReceiver, self).__init__()
+        super(Receiver, self).__init__()
 
         # Set the ip to default or given value.
         if ip=="":
@@ -28,6 +28,9 @@ class UDPReceiver( threading.Thread ):
             self.serverPort = port
 
         self.messageHandler = messageHandler
+        if self.messageHandler == "":
+            print "No messageHandler"
+            exit()
 
         print "RECEIVER initialized"
         print "UDP target IP:", self.serverHost
@@ -43,21 +46,17 @@ class UDPReceiver( threading.Thread ):
         while 1:
             # Accept connections
             connection, address = sock.accept()
-            print 'Connection accepted from %s' % str(address)
+            #print 'Connection accepted from %s' % str(address)
             # Receive data
             while 1:
                 data = connection.recv(2 ** 16)
-<<<<<<< HEAD
-                ip = connection.getsockname
-                print 'Received: %s' % str(data)
-                self.messageHandler.evaluateCommand(ip, data)
-=======
-                print 'Received: %s' % str(data)
-                self.messageHandler.evaluateCommand(data)
->>>>>>> f251ea31986342f57ba64e55dff37d1f702fc74c
+                ip = connection.getsockname()[0]
+                port = connection.getsockname()[1]
+                #print 'Received: %s' % str(data)
+                self.messageHandler.evaluateCommand(ip, port, data)
                 # Acknowledge reception of data
-                r = 'ACK\n'
-                connection.send(r)
+                #r = 'ACK\n'
+                #connection.send(r)
                 connection.close()
                 break
 
