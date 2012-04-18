@@ -6,7 +6,7 @@ class Elevator():
         self.IP = ip
         self.PORT = port
         self.status = status
-        self.manager = manager
+        self.MANAGER = manager
         # time of last message from this elevator
         self.lastAlive =lastAlive
         #initialization time of this elevator.

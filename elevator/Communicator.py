@@ -18,7 +18,6 @@ class Communicator():
 
         self.dataStore = dataStore
 
-    # TODO: needs to be figured out.
     def send(self, elevator, message):
         sender = Sender(elevator.IP, elevator.Port)
         sender.send(message)
