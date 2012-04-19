@@ -6,10 +6,15 @@ class TCPSender:
     recipientHost = ""
     recipientPort = 5005
 
+    def getMyIP(self):
+        import socket
+        return socket.gethostbyname(socket.gethostname())
+
     def __init__(self, ip="127.0.0.1", port=5005):
         # Set the ip to default or given value.
         if ip=="":
-            self.recipientHost = "127.0.0.1"
+            # send to self if the ip is not given.
+            self.recipientHost = self.getMyIP()
         else:
             self.recipientHost = ip
 
@@ -39,5 +44,5 @@ class TCPSender:
         print "broadcasting on tcp NOT Implemented"
 
 # test code for running only this file.
-#a = UDPSender("78.91.5.168", "")
-#a.send("testing")
+a = TCPSender("78.91.6.84")
+a.send("testing")

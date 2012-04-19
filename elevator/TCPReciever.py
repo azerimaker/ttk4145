@@ -3,6 +3,7 @@
 
 from socket import *
 import threading
+from MessageHandler import MessageHandler
 
 __author__ = 'kiro'
 
@@ -14,11 +15,14 @@ class TCPReceiver( threading.Thread ):
         import socket
         return socket.gethostbyname(socket.gethostname())
 
-    def __init__(self, port=5005, messageHandler=""):
+    def __init__(self, ip="", port=5005, messageHandler=""):
         super(TCPReceiver, self).__init__()
 
-        # serverHostname = get the ip address of this local machine.
-        self.serverHost = self.getMyIP()
+        if ip=="":
+            # serverHostname = get the ip address of this local machine.
+            self.serverHost = self.getMyIP()
+        else:
+            self.serverHost = ip
 
         # set the port
         if not port:
@@ -30,7 +34,7 @@ class TCPReceiver( threading.Thread ):
         self.messageHandler = messageHandler
         if self.messageHandler == "":
             print "No messageHandler in TCPReceiver"
-            exit()
+#            exit()
 
         # print debug info
         print "TCP-RECEIVER initialized"
@@ -47,14 +51,14 @@ class TCPReceiver( threading.Thread ):
         while 1:
             # Accept connections
             connection, address = sock.accept()
-            #print 'Connection accepted from %s' % str(address)
+            print 'Connection accepted from %s' % str(address)
             # Receive data
             while 1:
                 data = connection.recv(2 ** 16)
                 ip = connection.getsockname()[0]
                 port = connection.getsockname()[1]
-                #print 'Received: %s' % str(data)
-                self.messageHandler.evaluateCommand(ip, port, data)
+                print 'Received: %s' % str(data)
+#                self.messageHandler.evaluateCommand(ip, port, data)
                 # Acknowledge reception of data
                 #r = 'ACK\n'
                 #connection.send(r)
@@ -62,5 +66,5 @@ class TCPReceiver( threading.Thread ):
                 break
 
 # test code for running only this file.
-#a = UDPReceiver("78.91.5.168", 0, "")
-#a.run()
+a = TCPReceiver("78.91.6.84")
+a.run()
