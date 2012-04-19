@@ -11,12 +11,12 @@ class DataStore():
         self.elevatorList = []
         self.workTable = [][]
 
-    def newElevator(self):
-        self.elevatorList.append("elevator")
+    def newElevator(self, elevator):
+        self.elevatorList.append(elevator)
         print "adds a new elevator to the list of elevators. this is necessary for sending delegating work later. "
 
     def newWork(self, work, elevator):
-        print "figure out the nicities of this"
+        print "figure out the necessities of this"
         direction = "U/D"
         floor = "1-4"
         self.workTable[direction][floor] = elevator

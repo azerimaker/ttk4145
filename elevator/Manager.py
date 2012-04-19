@@ -4,3 +4,7 @@ __author__ = 'kiro'
 
 
 # thread that gets now jobs from the DataStore and directs them to the right elevator.
+
+class Manager():
+    def __init__(self):
+        print "manager initialization"

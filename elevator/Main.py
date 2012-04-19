@@ -1,4 +1,5 @@
 import threading
+from Manager import Manager
 
 __author__ = 'kiro'
 
@@ -12,8 +13,6 @@ class Main():
     #self.ElevatorControl
 
     def __init__(self):
-        print "main init"
-
         self.managerState = "F"
 
         # see if there is still a manager
@@ -22,15 +21,15 @@ class Main():
     def setManagerState(self, state):
         self.managerState = state
 
-
     def createManager(self):
+        self.manager = Manager()
         print "we are now the manager, Wohoo!"
 
 
+# thread for checking the manager status.
 class isManagerCheck( threading.Thread ):
-
     def __init__(self, main):
-        super.super(isManagerCheck, self).__init__()
+        super(isManagerCheck, self).__init__()
         self.main = main
 
     def run(self):
