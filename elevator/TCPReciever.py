@@ -26,9 +26,9 @@ class TCPReceiver( threading.Thread ):
         if self.messageHandler == "":
             print "No messageHandler"
             exit()
-        print "RECEIVER initialized"
-        print "UDP target IP:", self.serverHost
-        print "UDP target port:", self.serverPort
+        print "TCP-RECEIVER initialized"
+        print "target IP:", self.serverHost
+        print "target port:", self.serverPort
 
     def run(self):
         # Open socket to listen on

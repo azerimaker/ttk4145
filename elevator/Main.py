@@ -1,21 +1,25 @@
-from nevow.livepage import self
 import threading
+from Communicator import Communicator
 from DataStore import DataStore
 from Manager import Manager
+from MessageHandler import MessageHandler
 
 __author__ = 'kiro'
 
 # to be the top most file, where we call everything else from.
-
 class Main():
-    #self.Manager
-    #sself.Communicator
-    self.DataStore = DataStore()
-    #self.MessageHandler
-    #self.ElevatorControl
 
     def __init__(self):
-        self.managerState = "F"
+        #self.manager = Manager()
+        self.dataStore = DataStore()
+        self.messageHandler = MessageHandler(self, self.dataStore)
+        self.communicator = Communicator(self.messageHandler, self.dataStore)
+        #self.elevatorControl = ElevatorControl()
+
+        self.isManager = False
+
+        self.communicator.broadcast("testing, hei hei")
+
 
         # see if there is still a manager
         isManagerCheck(self).start()
@@ -25,6 +29,7 @@ class Main():
 
     def createManager(self):
         self.manager = Manager()
+        self.isManager = True
         print "we are now the manager, Wohoo!"
 
 
@@ -35,6 +40,6 @@ class isManagerCheck( threading.Thread ):
         self.main = main
 
     def run(self):
-        print "checking manager status"
-        if self.main.managerState[0]!="T":
+        print "Checking manager status\n"
+        if not self.main.isManager:
             self.main.createManager()

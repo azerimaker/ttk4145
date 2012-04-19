@@ -7,4 +7,4 @@ __author__ = 'kiro'
 
 class Manager():
     def __init__(self):
-        print "manager initialization"
+        print "Manager Initialization \n"

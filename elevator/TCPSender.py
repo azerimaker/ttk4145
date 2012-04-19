@@ -19,9 +19,9 @@ class TCPSender:
         else:
             self.recipientPort = port
 
-        print "SENDER initialized"
-        print "UDP target IP:", self.recipientHost
-        print "UDP target port:", self.recipientPort
+        print "TCP-SENDER initialized"
+        print "target IP:", self.recipientHost
+        print "target port:", self.recipientPort
 
     def send(self, message):
 

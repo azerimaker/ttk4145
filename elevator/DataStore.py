@@ -7,24 +7,29 @@ __author__ = 'kiro'
 class DataStore():
 
     def __init__(self):
-
         self.elevatorList = []
-        self.workTable = [][]
+        self.workTable = [[],[]]
+
+        print "DataStore Initialized"
 
     def newElevator(self, elevator):
         self.elevatorList.append(elevator)
         print "adds a new elevator to the list of elevators. this is necessary for sending delegating work later. "
 
     def newWork(self, work, ip):
-
-        print "figure out the necessities of this"
+        # TODO add work to the correct lists.
+        print "adding new work to global list"
         elevator = self.getElevator(ip)
         direction = "U/D"
         floor = "1-4"
-        self.workTable[direction][floor] = elevator
+        self.workTable[[direction],[floor]] = elevator
 
     def getWork(self):
         return self.workTable
+
+    def workDone(self, command):
+        # TODO remove work from correct list.
+        print "removing work from global"
 
     def getElevatorList(self):
         return self.elevatorList
@@ -34,4 +39,9 @@ class DataStore():
             if e.IP == ip:
                 return e
 
-    #
+    def setElevatorState(self, state, ip):
+        e = self.getElevator(ip)
+        e.setState(state, ip)
+
+    def newManager(self, command):
+        print "new manager"

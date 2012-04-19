@@ -18,9 +18,9 @@ class UDPSender:
         else:
             self.UDP_PORT = port
 
-        print "SENDER initialized"
-        print "UDP target IP:", self.UDP_IP
-        print "UDP target port:", self.UDP_PORT
+        print "UDP-SENDER initialized"
+        print "target IP:", self.UDP_IP
+        print "target port:", self.UDP_PORT
 
     def send(self, message):
         s = socket(AF_INET, SOCK_DGRAM)

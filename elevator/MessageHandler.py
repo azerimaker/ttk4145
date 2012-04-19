@@ -2,11 +2,13 @@ from Elevator import Elevator
 
 __author__ = 'kiro'
 
-class messageHandler():
+class MessageHandler():
 
     def __init__(self, main, dataStore):
         self.main = main
         self.dataStore = dataStore
+
+        print "MessageHandler initialized"
 
     def evaluateCommand(self, ip, port, command):
         ## MESSAGES
@@ -55,13 +57,16 @@ class messageHandler():
             e = self.dataStore.getElevator(ip)
             e.setStatus(command)
         elif command == jobDone:
-            print jobDone
+            self.dataStore.workDone(command)
         elif command == obstructed:
+            if self.main.isManager:
+                print "manager is obstructed"
             print command
         elif command == elevatorState:
+            self.dataStore.setElevatorState(elevatorState, ip)
             print elevatorState
         elif command == newManager:
-            print newManager
+            self.dataStore.newManager(newManager)
         elif command == workOrder:
             print workOrder
         else:

@@ -23,7 +23,7 @@ class UDPReceiver( threading.Thread ):
         if self.messageHandler == "":
             print "No messageHandler"
             exit()
-        print "RECEIVER initialized"
+        print "UDP-RECEIVER initialized"
         print "UDP target IP:", self.UDP_IP
         print "UDP target port:", self.UDP_PORT
 
