@@ -22,7 +22,7 @@ class Communicator():
         self.TCPSender = TCPSender("78.91.5.168", "")
         self.UDPSender = TCPSender(5005)
 
-        # the DataStore that contains the elevators and the work list.  
+        # the DataStore that contains the elevators and the work list.
         self.dataStore = dataStore
 
     # sends a message to one specific elevator.

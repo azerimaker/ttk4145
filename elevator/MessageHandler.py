@@ -8,25 +8,37 @@ class messageHandler():
     def evaluateCommand(self, ip, port, command):
         ## MESSAGES
 
-        com = "elevator" + "direction" + "floor"
-        regex = "[1-9][1-9]" + "[UD]" + "[1-9][1-9]"
+        # message format
+        # "elevator" + "direction" + "floor"
+        # "[1-9][1-9]" + "[UD]" + "[1-9][1-9]"
 
-        newJob = ""
-        state = "" # I'm alive message
-        # if state == "------" this elevator is
-
+        #broad cast to everyone
         helloWorld = ""
-        doWork = ""
 
+        # broadcast to all
+        newOrder = ""
 
-        state    = "01D01"
-        request  = "--U03"
-        work     = "01U02"
-        complete = "03---"
-        alive    = "00---"
+        # broadcast to everyone.
+        stillAlive = ""
+
+        # broadcast to everyone.
+        jobDone = ""
+
+        # broadcast to everyone.
+        obstructed = ""
+
+        # broadcast to everyone.
+        elevatorState = ""
+
+        # broadcast to everyone
         newManager = ""
 
-        # # ! MESSAGES
+        # receive from manager elevator
+        workOrder = ""
+
+
+
+        ## end MESSAGES
 
         # command sorter.
         if command == state:
