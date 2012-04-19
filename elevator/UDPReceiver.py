@@ -11,12 +11,9 @@ class UDPReceiver( threading.Thread ):
     UDP_IP="127.0.0.1"
     UDP_PORT=5005
 
-    def __init__(self, ip="127.0.0.1", port=5005, messageHandler=""):
+    def __init__(self, port=5005, messageHandler=""):
         super(UDPReceiver, self).__init__()
-        if ip == "":
-            self.UDP_IP = "127.0.0.1"
-        else:
-            self.UDP_IP = ip
+        self.UDP_IP = "<broadcast>"
 
         if not port:
             self.UDP_PORT = 5005
@@ -25,7 +22,7 @@ class UDPReceiver( threading.Thread ):
         self.messageHandler = messageHandler
         if self.messageHandler == "":
             print "No messageHandler"
-#            exit()
+            exit()
         print "RECEIVER initialized"
         print "UDP target IP:", self.UDP_IP
         print "UDP target port:", self.UDP_PORT
@@ -40,5 +37,5 @@ class UDPReceiver( threading.Thread ):
             print "received message:", data
 
 # test code for running only this file.
-a = UDPReceiver("<broadcast>", 5005)
-a.run()
+#a = UDPReceiver(5005)
+#a.run()
