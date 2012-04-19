@@ -10,7 +10,7 @@ class TCPSender:
         import socket
         return socket.gethostbyname(socket.gethostname())
 
-    def __init__(self, ip="127.0.0.1", port=5005):
+    def __init__(self, ip="", port=5005):
         # Set the ip to default or given value.
         if ip=="":
             # send to self if the ip is not given.
@@ -19,7 +19,7 @@ class TCPSender:
             self.recipientHost = ip
 
         # Set the port to default or given value.
-        if not port:
+        if not port or port == 0:
                 self.recipientPort = 5005
         else:
             self.recipientPort = port
@@ -44,5 +44,5 @@ class TCPSender:
         print "broadcasting on tcp NOT Implemented"
 
 # test code for running only this file.
-a = TCPSender("78.91.6.84")
-a.send("testing")
+#a = TCPSender("78.91.6.84")
+#a.send("testing")

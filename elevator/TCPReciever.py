@@ -25,7 +25,7 @@ class TCPReceiver( threading.Thread ):
             self.serverHost = ip
 
         # set the port
-        if not port:
+        if not port or port == 0:
             self.serverPort = 5005
         else:
             self.serverPort = port
@@ -58,7 +58,7 @@ class TCPReceiver( threading.Thread ):
                 ip = connection.getsockname()[0]
                 port = connection.getsockname()[1]
                 print 'Received: %s' % str(data)
-#                self.messageHandler.evaluateCommand(ip, port, data)
+                self.messageHandler.evaluateCommand(ip, port, data)
                 # Acknowledge reception of data
                 #r = 'ACK\n'
                 #connection.send(r)
@@ -66,5 +66,5 @@ class TCPReceiver( threading.Thread ):
                 break
 
 # test code for running only this file.
-a = TCPReceiver("78.91.6.84")
-a.run()
+#a = TCPReceiver("78.91.6.84")
+#a.run()
