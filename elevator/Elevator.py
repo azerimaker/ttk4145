@@ -4,7 +4,7 @@ __author__ = 'kiro'
 
 class Elevator():
 
-    def __init__(self, ip="127.0.0.1", port=5005, status="F", manager=False):
+    def __init__(self, ip="127.0.0.1", port=5005, state="F------", manager=False):
         self.IP = ip
         self.PORT = port
         self.state = state

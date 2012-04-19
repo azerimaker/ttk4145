@@ -2,7 +2,8 @@ import threading
 from time import sleep
 from Communicator import Communicator
 from DataStore import DataStore
-from Manager import Manager
+from Controller import Controller
+from Elevator import Elevator
 from MessageHandler import MessageHandler
 
 __author__ = 'kiro'
@@ -13,38 +14,27 @@ class Main():
     def __init__(self):
         #self.manager = Manager()
         self.dataStore = DataStore()
-        self.messageHandler = MessageHandler(self, self.dataStore)
+        self.controller = Controller(self.dataStore)
+        self.messageHandler = MessageHandler(self, self.controller)
         self.communicator = Communicator(self.messageHandler, self.dataStore)
         #self.elevatorControl = ElevatorControl()
 
-        self.isManager = False
-
-        # see if there is still a manager
-        isManagerCheck(self).start()
+        print "MAIN initialize"
 
         ## test code.
-        print "testing"
+        print "--------------"
+        print "start testing"
         sleep(2)
         self.communicator.broadcast("testing, hei hei")
         self.communicator.broadcast("testing11, hei hei")
         self.communicator.broadcast("testing2222, hei hei")
+        e = Elevator()
+        self.communicator.sendToElevator(e, "message testings over tcp")
 
     def setManagerState(self, state):
         self.managerState = state
 
-    def createManager(self):
-        self.manager = Manager()
-        self.isManager = True
+    def setDispatcher(self):
+        self.controller.setIsDispatcher(True)
         print "we are now the manager, Wohoo!"
 
-
-# thread for checking the manager status.
-class isManagerCheck( threading.Thread ):
-    def __init__(self, main):
-        super(isManagerCheck, self).__init__()
-        self.main = main
-
-    def run(self):
-        print "Checking manager status\n"
-        if not self.main.isManager:
-            self.main.createManager()

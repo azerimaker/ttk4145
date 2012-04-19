@@ -5,22 +5,22 @@ __author__ = 'kiro'
 
 class UDPSender:
     UDP_IP = ""
-    UDP_PORT = 0
+    UDP_PORT = 6005
 
-    def __init__(self, port=5005):
+    def __init__(self, port=6005):
         # Set the ip to default or given value.
-        #self.UDP_IP = "<broadcast>"
-        self.UDP_IP = "127.0.0.1"
+        self.UDP_IP = "<broadcast>"
+        #self.UDP_IP = "127.0.0.1"
 
         # Set the port to default or given value.
         if not port:
-            self.UDP_PORT = 5005
+            self.UDP_PORT = 6005
         else:
             self.UDP_PORT = port
 
         print "UDP-SENDER initialized"
-        print "target IP:", self.UDP_IP
-        print "target port:", self.UDP_PORT
+        print "\t target IP:", self.UDP_IP
+        print "\t target port:", self.UDP_PORT
 
     def send(self, message):
         s = socket(AF_INET, SOCK_DGRAM)

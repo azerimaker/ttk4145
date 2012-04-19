@@ -9,23 +9,23 @@ __author__ = 'kiro'
 
 class UDPReceiver( threading.Thread ):
     UDP_IP="127.0.0.1"
-    UDP_PORT=5005
+    UDP_PORT=6005
 
-    def __init__(self, port=5005, messageHandler=""):
+    def __init__(self, port=6005, messageHandler=""):
         super(UDPReceiver, self).__init__()
         self.UDP_IP = "<broadcast>"
 
         if not port:
-            self.UDP_PORT = 5005
+            self.UDP_PORT = 6005
         else:
             self.UDP_PORT = port
         self.messageHandler = messageHandler
         if self.messageHandler == "":
-            print "No messageHandler"
+            print "No messageHandler in UDPReceiver"
             exit()
         print "UDP-RECEIVER initialized"
-        print "UDP target IP:", self.UDP_IP
-        print "UDP target port:", self.UDP_PORT
+        print "\t target IP:", self.UDP_IP
+        print "\t target port:", self.UDP_PORT
 
     def run(self):
         sock = socket.socket( socket.AF_INET, # Internet

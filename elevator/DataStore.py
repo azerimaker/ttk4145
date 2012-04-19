@@ -14,7 +14,7 @@ class DataStore():
 
     def newElevator(self, elevator):
         self.elevatorList.append(elevator)
-        print "adds a new elevator to the list of elevators. this is necessary for sending delegating work later. "
+        print "adds a new elevator to the list of elevators. this is necessary for delegating work later. "
 
     def newWork(self, work, ip):
         # TODO add work to the correct lists.
@@ -43,5 +43,3 @@ class DataStore():
         e = self.getElevator(ip)
         e.setState(state, ip)
 
-    def newManager(self, command):
-        print "new manager"

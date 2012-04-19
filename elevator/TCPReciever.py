@@ -7,8 +7,8 @@ import threading
 __author__ = 'kiro'
 
 class TCPReceiver( threading.Thread ):
-    serverHost="127.0.0.1"
-    serverPort=5005
+    serverHost = "127.0.0.1"
+    serverPort = 5005
 
     def getMyIP(self):
         import socket
@@ -29,13 +29,13 @@ class TCPReceiver( threading.Thread ):
         # set the message handler
         self.messageHandler = messageHandler
         if self.messageHandler == "":
-            print "No messageHandler"
+            print "No messageHandler in TCPReceiver"
             exit()
 
         # print debug info
         print "TCP-RECEIVER initialized"
-        print "target IP:", self.serverHost
-        print "target port:", self.serverPort
+        print "\t target IP:", self.serverHost
+        print "\t target port:", self.serverPort
 
     def run(self):
         # Open socket to listen on

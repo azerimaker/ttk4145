@@ -4,7 +4,7 @@ __author__ = 'kiro'
 
 class TCPSender:
     recipientHost = ""
-    recipientPort = 0
+    recipientPort = 5005
 
     def __init__(self, ip="127.0.0.1", port=5005):
         # Set the ip to default or given value.
@@ -20,8 +20,8 @@ class TCPSender:
             self.recipientPort = port
 
         print "TCP-SENDER initialized"
-        print "target IP:", self.recipientHost
-        print "target port:", self.recipientPort
+        print "\t target IP:", self.recipientHost
+        print "\t target port:", self.recipientPort
 
     def send(self, message):
 
@@ -31,7 +31,7 @@ class TCPSender:
         sock.connect((self.recipientHost, self.recipientPort))
 
         sock.send(message)
-        #sock.send( messortersage, (self.recipientHost, self.recipientPort) )
+        #sock.send( message, (self.recipientHost, self.recipientPort) )
 
         sock.close()
 

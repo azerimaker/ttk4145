@@ -4,9 +4,9 @@ __author__ = 'kiro'
 
 class MessageHandler():
 
-    def __init__(self, main, dataStore):
+    def __init__(self, main, controller):
         self.main = main
-        self.dataStore = dataStore
+        self.controller = controller
 
         print "MessageHandler initialized"
 
@@ -45,29 +45,31 @@ class MessageHandler():
 
         # command sorter.
         if command == helloWorld:
+            # new elevator in the network
             e = Elevator(ip, port, command[0], False, )
-            self.dataStore.newElevator(e)
+            self.controller.addElevator(e)
         elif command == newOrder:
-            self.dataStore.newWork(newOrder, ip)
+            self.controller.newWork(newOrder, ip)
             print newOrder
         elif command == stillAlive:
             # if you do not get a reply from the manager in 3 seconds, the oldest elevator still responding takes over.
             if state[0] == "T":
                 self.main.setManagerState()
-            e = self.dataStore.getElevator(ip)
+            e = self.controller.getElevator(ip)
             e.setStatus(command)
         elif command == jobDone:
-            self.dataStore.workDone(command)
+            self.controller.workDone(command)
         elif command == obstructed:
             if self.main.isManager:
                 print "manager is obstructed"
             print command
         elif command == elevatorState:
-            self.dataStore.setElevatorState(elevatorState, ip)
+            self.controller.setElevatorState(elevatorState, ip)
             print elevatorState
         elif command == newManager:
-            self.dataStore.newManager(newManager)
+            self.controller.setManager(newManager)
         elif command == workOrder:
+            self.controller.doWork(workOrder)
             print workOrder
         else:
             print "Command not valid! - " + ip + ":" + str(port) + " com: " + command
