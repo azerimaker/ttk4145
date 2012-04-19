@@ -35,6 +35,8 @@ class TCPSender:
 
         sock.close()
 
+    def broadcast(self, message):
+        print "broadcasting on tcp NOT Implemented"
 
 # test code for running only this file.
 #a = UDPSender("78.91.5.168", "")

@@ -22,6 +22,7 @@ class Main():
         # see if there is still a manager
         isManagerCheck(self).start()
 
+        ## test code.
         print "testing"
         sleep(2)
         self.communicator.broadcast("testing, hei hei")
