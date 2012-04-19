@@ -1,41 +1,39 @@
 from socket import *
+import time
 
 __author__ = 'kiro'
 
-class Sender:
-    recipientHost = ""
-    recipientPort = 0
+class UDPSender:
+    UDP_IP = ""
+    UDP_PORT = 0
 
-    def __init__(self, ip="127.0.0.1", port=5005):
+    def __init__(self, port=5005):
         # Set the ip to default or given value.
-        if ip=="":
-            self.recipientHost = "127.0.0.1"
-        else:
-            self.recipientHost = ip
+        #self.UDP_IP = "<broadcast>"
+        self.UDP_IP = "127.0.0.1"
 
         # Set the port to default or given value.
         if not port:
-            self.recipientPort = 5005
+            self.UDP_PORT = 5005
         else:
-            self.recipientPort = port
+            self.UDP_PORT = port
 
         print "SENDER initialized"
-        print "UDP target IP:", self.recipientHost
-        print "UDP target port:", self.recipientPort
+        print "UDP target IP:", self.UDP_IP
+        print "UDP target port:", self.UDP_PORT
 
     def send(self, message):
+        s = socket(AF_INET, SOCK_DGRAM)
+        s.bind(('', 0))
+        s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-        #print "message:", message
-
-        sock = socket(AF_INET, SOCK_STREAM)
-        sock.connect((self.recipientHost, self.recipientPort))
-
-        sock.send(message)
-        #sock.send( messortersage, (self.recipientHost, self.recipientPort) )
-
-        sock.close()
-
+        s.sendto(message, ('<broadcast>', self.UDP_PORT))
 
 # test code for running only this file.
-#a = UDPSender("78.91.5.168", "")
+
+#a = UDPSender()
 #a.send("testing")
+#a.send("testing1")
+#a.send("testing2")
+#a.send("testing3")
+

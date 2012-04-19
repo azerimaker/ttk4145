@@ -1,5 +1,5 @@
-from TCPSender import Sender
-from TCPReciever import Receiver
+from TCPSender import TCPSender
+from TCPReciever import TCPReceiver
 
 __author__ = 'kiro'
 
@@ -11,15 +11,15 @@ class Communicator():
 
         # my ip is the ip of this computer.
         # 5005 is the standard port for communication.
-        self.receiver = Receiver("78.91.5.168", 5005, messageHandler)
+        self.receiver = TCPReceiver("78.91.5.168", 5005, messageHandler)
         self.receiver.start()
 
-        self.sender = Sender("78.91.5.168", "")
+        self.sender = TCPSender("78.91.5.168", "")
 
         self.dataStore = dataStore
 
     def send(self, elevator, message):
-        sender = Sender(elevator.IP, elevator.Port)
+        sender = TCPSender(elevator.IP, elevator.Port)
         sender.send(message)
 
     def sendToAll(self, message):

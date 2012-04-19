@@ -2,7 +2,7 @@ from socket import *
 
 __author__ = 'kiro'
 
-class Sender:
+class TCPSender:
     recipientHost = ""
     recipientPort = 0
 
