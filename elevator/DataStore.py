@@ -15,8 +15,10 @@ class DataStore():
         self.elevatorList.append(elevator)
         print "adds a new elevator to the list of elevators. this is necessary for sending delegating work later. "
 
-    def newWork(self, work, elevator):
+    def newWork(self, work, ip):
+
         print "figure out the necessities of this"
+        elevator = self.getElevator(ip)
         direction = "U/D"
         floor = "1-4"
         self.workTable[direction][floor] = elevator
@@ -24,5 +26,12 @@ class DataStore():
     def getWork(self):
         return self.workTable
 
-    def getElevators(self):
+    def getElevatorList(self):
         return self.elevatorList
+
+    def getElevator(self, ip):
+        for e in self.elevatorList:
+            if e.IP == ip:
+                return e
+
+    #

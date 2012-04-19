@@ -1,4 +1,6 @@
+from nevow.livepage import self
 import threading
+from DataStore import DataStore
 from Manager import Manager
 
 __author__ = 'kiro'
@@ -8,7 +10,7 @@ __author__ = 'kiro'
 class Main():
     #self.Manager
     #sself.Communicator
-    #self.DataStore
+    self.DataStore = DataStore()
     #self.MessageHandler
     #self.ElevatorControl
 
