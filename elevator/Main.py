@@ -1,4 +1,5 @@
 import threading
+from time import sleep
 from Communicator import Communicator
 from DataStore import DataStore
 from Manager import Manager
@@ -18,11 +19,14 @@ class Main():
 
         self.isManager = False
 
-        self.communicator.broadcast("testing, hei hei")
-
-
         # see if there is still a manager
         isManagerCheck(self).start()
+
+        print "testing"
+        sleep(2)
+        self.communicator.broadcast("testing, hei hei")
+        self.communicator.broadcast("testing11, hei hei")
+        self.communicator.broadcast("testing2222, hei hei")
 
     def setManagerState(self, state):
         self.managerState = state

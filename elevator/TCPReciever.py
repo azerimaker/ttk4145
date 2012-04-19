@@ -3,7 +3,6 @@
 
 from socket import *
 import threading
-from time import sleep
 
 __author__ = 'kiro'
 
@@ -11,21 +10,29 @@ class TCPReceiver( threading.Thread ):
     serverHost="127.0.0.1"
     serverPort=5005
 
-    def __init__(self, ip="127.0.0.1", port=5005, messageHandler=""):
-        super(TCPReceiver, self).__init__()
-        if ip == "":
-            self.serverHost = "127.0.0.1"
-        else:
-            self.serverHost = ip
+    def getMyIP(self):
+        import socket
+        return socket.gethostbyname(socket.gethostname())
 
+    def __init__(self, port=5005, messageHandler=""):
+        super(TCPReceiver, self).__init__()
+
+        # serverHostname = get the ip address of this local machine.
+        self.serverHost = self.getMyIP()
+
+        # set the port
         if not port:
             self.serverPort = 5005
         else:
             self.serverPort = port
+
+        # set the message handler
         self.messageHandler = messageHandler
         if self.messageHandler == "":
             print "No messageHandler"
             exit()
+
+        # print debug info
         print "TCP-RECEIVER initialized"
         print "target IP:", self.serverHost
         print "target port:", self.serverPort
