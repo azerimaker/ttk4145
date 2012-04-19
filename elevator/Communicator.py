@@ -1,5 +1,5 @@
-from Sender import Sender
-from Reciever import Receiver
+from TCPSender import Sender
+from TCPReciever import Receiver
 
 __author__ = 'kiro'
 
@@ -25,6 +25,9 @@ class Communicator():
     def sendToAll(self, message):
         for elevator in self.dataStore.getElevators():
             self.send(elevator, message)
+
+    def broadcast(self):
+        print "broadcasting to TCP/IP"
 
 
 # test code for this class.
