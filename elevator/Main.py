@@ -9,6 +9,7 @@ __author__ = 'kiro'
 class Main():
 
     def __init__(self):
+
         self.messageHandler = MessageHandler()
         self.controller = Controller(self.messageHandler)
         self.messageHandler.setController(self.controller)

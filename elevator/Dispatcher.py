@@ -84,13 +84,14 @@ UP = 1
     This method takes a dead elevator and redistributes its jobs
     to the other elevators that are still online
     '''
-    def redistribute_jobs(peer):
+    def redistribute_jobs(dead_peers):
         # TODO: takes in a dead peer, redistributes its jobs to the ones still online
-        for direction in range(2):
-            for floor in range(NO_FLOORS):
-                if job_list[direction][floor] == peer.id:
-                    job = Job(direction, floor)
-                    dispatch_job(job)
+        for peer in dead_peers:
+            for direction in range(2):
+                for floor in range(NO_FLOORS):
+                    if job_list[direction][floor] == peer.id:
+                        job = Job(direction, floor)
+                        dispatch_job(job)
         
     
     '''
