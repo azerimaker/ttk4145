@@ -23,7 +23,7 @@ class Main():
         self.controller.communicator.broadcast("HelloWorld")
         self.controller.communicator.broadcast("StillAlive")
         self.controller.communicator.broadcast("Obstructed")
-        self.controller.communicator.sendToElevator(e, "newManager")
+        self.controller.communicator.broadcast("newManager")
         e = Elevator()
         #self.controller.communicator.sendToElevator(e, "message testings over tcp")
         self.controller.communicator.sendToElevator(e, "T01D05")

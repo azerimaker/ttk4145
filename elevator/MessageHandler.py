@@ -82,7 +82,7 @@ class MessageHandler():
             print "elevator state! - conf"
         #
         elif re.match(newManager, command):
-            self.controller.setManager(ip)
+            self.controller.setDispatcher(ip)
             print "new Manager - conf"
         #
         elif re.match(workOrder, command):
