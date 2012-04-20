@@ -12,10 +12,11 @@ class Main():
 
     def __init__(self):
 
-        self.controller = Controller()
-        self.messageHandler = MessageHandler(self.controller)
-        self.communicator = Communicator(self.messageHandler)
 
+        self.messageHandler = MessageHandler()
+        self.communicator = Communicator(self.messageHandler)
+        self.controller = Controller(self.communicator)
+        self.messageHandler.setController(self.controller)
 
         print "MAIN initialize"
 
@@ -26,9 +27,6 @@ class Main():
         sleep(2)
         print "testing start"
 
-        peer = Peer()
-        message = Message()
-        self.controller.communicator.sendToOne(peer, message)
 
         print "testing complete"
         print "--------------"

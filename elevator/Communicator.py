@@ -8,8 +8,6 @@ __author__ = 'kiro'
 
 class Communicator():
 
-    elevators = []
-
     def __init__(self, messageHandler):
 
         # the tcp listener, that handles incoming connections on tcp.

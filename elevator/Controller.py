@@ -1,4 +1,7 @@
-from Communicator import Communicator
+from time import time
+from Constants import *
+from Elevator import Elevator
+from Message import Message
 
 class Controller:
 
@@ -6,10 +9,11 @@ class Controller:
         import socket
         return socket.gethostbyname(socket.gethostname())
 
-    def __init__(self, dispatcher=False):
+    def __init__(self, communicator, dispatcher=False):
+        self.communicator = communicator
 
-        self.job_list = [[0 for x in range(NO_FLOORS)] for x in range(2)] # direction is one dimension, no. floors the other
-        self.peers = {} # store peer objects, with IP as key       
+        self.orderList = [[0 for x in range(NO_FLOORS)] for x in range(2)] # direction is one dimension, no. floors the other
+        self.peerList = {} # store peer objects, with IP as key
         self.dispatcher = dispatcher
         self.id = self.getMyIP()
         self.status = ""
@@ -25,7 +29,7 @@ class Controller:
         currentTime = time()
         dead_peers = []
         dispatcher_dead = False
-        for peer_id, peer in self.peers.iteritems():
+        for peer_id, peer in self.peerList.iteritems():
             if (currentTime - peer.last_alive) < TIMEOUT:
                 continue
             else:
@@ -45,7 +49,7 @@ class Controller:
     '''
     def find_new_dispatcher(self, dead_peers):
         elder = self
-        for peer_id, peer in self.peers.iteritems():
+        for peer_id, peer in self.peerList.iteritems():
             if peer in dead_peers:
                 continue
             if peer.id > elder.id:
@@ -59,7 +63,7 @@ class Controller:
     '''
     Turns this elevator into dispatcher
     '''
-    def become_dispatcher(self):
+    def become_dispatcher(self, dead_peers):
         self.dispatcher = True
         print "This elevator is now dispatcher.\nRedistributing jobs of dead peers"
         self.redistribute_jobs(dead_peers)
@@ -75,7 +79,7 @@ class Controller:
         # and listens for incoming messages for a set time period
         last_alive = time()
         for message in messages:
-            self.peers[message.id] = Peer(message.id, message.status, message.dispatcher, last_alive)
+            self.peerList[message.id] = Peer(message.id, message.status, message.dispatcher, last_alive)
 #        networking.set_peers(peers) # give networking thread the list of peers so that it can update them
 #        networking.broadcast_existence()
         self.start()
@@ -102,14 +106,14 @@ class Controller:
     '''
     Finds the elevator best suited for a job
     '''     
-    def find_best_suited(job):
+    def find_best_suited(self, floor, direction):
         best_score = -1
         best_suited = ""
-        for peer_id, peer in peers.iteritems():
+        for peer_id, peer in self.peerList.iteritems():
             if peer.is_obstructed or peer.is_stopped:
                 continue
             else:
-                score = get_score(peer, job)
+                score = get_score(peer, floor, direction)
                 if score < best_score:
                     best_score = score
                     best_suited = peer
@@ -155,7 +159,7 @@ class Controller:
     This method takes a dead elevator and redistributes its jobs
     to the other elevators that are still online
     '''
-    def redistribute_jobs(dead_peers):
+    def redistribute_jobs(self, dead_peers):
         # TODO: takes in a dead peer, redistributes its jobs to the ones still online
         for peer in dead_peers:
             for direction in range(2):
@@ -169,19 +173,24 @@ class Controller:
     Takes a job and finds an elevator to give it to
     When job list is updated, broadcast to all
     '''    
-    def dispatch_job(job):
+    def dispatch_job(self, floor, direction):
         # if job is not in list of jobs, find elevator to take it
-        if not job_list[job.direction][job.floor]:
-            peer = find_best_suited(job)
-            message = Job_message(job)
-            peer.send_message(message)
-            
-    
-    def update_job_list(self):
-        message = Job_list_message(job_list)
-        for peer_id, peer in peers.iteritems():
+        if not job_list[direction][floor]:
+
+            peer = find_best_suited(floor, direction)
+
+            self.update_job_list(peer, floor, direction)
+
+            message = Message("newOrder", peer.IP, floor, direction, "", "")
+
             peer.send_message(message)
 
-    def receive_order(order):
+
+    def update_job_list(self, peer, floor, direction):
+        self.orderList[direction][floor] = peer.IP
+        message = Message("updateOrders", "", "", "", self.orderList, "")
+        self.communicator.sendToAll(self.peerList, message)
+
+    def receive_order(self, order):
         if order:
             print "hei"

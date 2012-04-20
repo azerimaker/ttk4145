@@ -13,8 +13,8 @@ class MessageHandler():
     def setController(self, controller):
         self.controller = controller
 
-    def evaluateCommand(self, ip, port, messageStr):
-        message = pickle.loads(messageStr)
+    def evaluateCommand(self, ip, port, message):
+        message = pickle.loads(message)
 
         if message.type == "newOrder":
             self.controller.newOrder(message)
@@ -31,6 +31,8 @@ class MessageHandler():
         elif message.type == "imAlive":
             self.controller.stillAlive(message, time())
             print "imAlive"
+        else:
+            print "you are an idiot, message type not found."
 
 
 
