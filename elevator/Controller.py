@@ -2,6 +2,7 @@ from time import time
 from Constants import *
 from Elevator import Elevator
 from Message import Message
+from Peer import Peer
 
 class Controller:
 
@@ -85,18 +86,23 @@ class Controller:
         self.start()
 
     def newOrder(self, message):
+        # TODO
         print "new Order, not impl"
 
     def orderComplete(self, message):
+        # TODO
         print ""
 
     def updateOrders(self, message):
+        # TODO
         print ""
 
     def updateStatus(self, message):
+        # TODO
         print ""
 
     def stillAlive(self, message, time):
+        # TODO
         print ""
 
 #################################
@@ -126,31 +132,31 @@ class Controller:
     Gives elevator a score based on how suited it is for the job.
     A score of 1 is best 
     '''
-    def get_score(peer, job):
+    def get_score(self, peer, floor, direction):
         # TODO: FIGURE OUT HOW BEST TO GIVE A SCORE! THIS IS PROBABLY THE WORST PART LOGIC-WISE!
         score = 0.0
         scaling_factor = 1/NO_FLOORS
         
         # current distance from job
         distance = 0
-        if peer.direction == UP and job.floor > peer.floor:
-            distance = job.floor - peer.floor
-        elif peer.direction == UP and job.floor < peer.floor:
+        if peer.direction == UP and floor > peer.floor:
+            distance = floor - peer.floor
+        elif peer.direction == UP and floor < peer.floor:
             distance = 0
-        elif peer.direction == DOWN and job.floor > peer.floor:
+        elif peer.direction == DOWN and floor > peer.floor:
             distance = 0
-        elif peer.direction == DOWN and job.floor < peer.floor:
-            distance = peer.floor - job.floor
+        elif peer.direction == DOWN and floor < peer.floor:
+            distance = peer.floor - floor
         
         # number of jobs waiting
         no_jobs = 0
         for direction in range(2):
             for floor in range(NO_FLOORS):
-                if job_list[direction][floor] == peer.id:
+                if self.orderList[floor][direction] == peer.id:
                     no_jobs+=1
         
         score = distance + no_jobs
-        if score == 0:
+        if not score:
             return 1
         else:
             return score
@@ -164,10 +170,9 @@ class Controller:
         for peer in dead_peers:
             for direction in range(2):
                 for floor in range(NO_FLOORS):
-                    if job_list[direction][floor] == peer.id:
-                        job = Job(direction, floor)
-                        dispatch_job(job)
-        
+                    if self.orderList[floor][direction] == peer.id:
+                        self.dispatch_job(floor,direction)
+
     
     '''
     Takes a job and finds an elevator to give it to
@@ -175,16 +180,13 @@ class Controller:
     '''    
     def dispatch_job(self, floor, direction):
         # if job is not in list of jobs, find elevator to take it
-        if not job_list[direction][floor]:
-
-            peer = find_best_suited(floor, direction)
-
+        if not self.orderList[direction][floor]:
+            peer = self.find_best_suited(floor, direction)
             self.update_job_list(peer, floor, direction)
-
             message = Message("newOrder", peer.IP, floor, direction, "", "")
-
-            peer.send_message(message)
-
+            self.communicator.sendToAll(self.peerList, message)
+        else:
+            print "Order Exists"
 
     def update_job_list(self, peer, floor, direction):
         self.orderList[direction][floor] = peer.IP
