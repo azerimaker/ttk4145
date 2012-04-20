@@ -8,9 +8,11 @@ class Elevator():
         self.IP = ip
         self.PORT = port
         self.state = state
-        self.MANAGER = manager
+        self.isManager = manager
+
         # time of last message from this elevator
         self.lastAlive = time.gmtime()
+
         #initialization time of this elevator.
         self.age = time.gmtime() # has to be changed.
 

@@ -12,7 +12,7 @@ class DataStore():
 
         print "DataStore Initialized"
 
-    def newElevator(self, elevator):
+    def addElevator(self, elevator):
         self.elevatorList.append(elevator)
         print "adds a new elevator to the list of elevators. this is necessary for delegating work later. "
 

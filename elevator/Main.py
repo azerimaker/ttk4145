@@ -1,7 +1,4 @@
-import threading
 from time import sleep
-from Communicator import Communicator
-from DataStore import DataStore
 from Controller import Controller
 from Elevator import Elevator
 from MessageHandler import MessageHandler
@@ -12,12 +9,9 @@ __author__ = 'kiro'
 class Main():
 
     def __init__(self):
-        #self.manager = Manager()
-        self.dataStore = DataStore()
-        self.controller = Controller(self.dataStore)
-        self.messageHandler = MessageHandler(self, self.controller)
-        self.communicator = Communicator(self.messageHandler, self.dataStore)
-        #self.elevatorControl = ElevatorControl()
+        self.messageHandler = MessageHandler()
+        self.controller = Controller(self.messageHandler)
+        self.messageHandler.setController(self.controller)
 
         print "MAIN initialize"
 
@@ -25,16 +19,11 @@ class Main():
         print "--------------"
         print "start testing"
         sleep(2)
-        self.communicator.broadcast("testing, hei hei")
-        self.communicator.broadcast("testing11, hei hei")
-        self.communicator.broadcast("testing2222, hei hei")
+        self.controller.communicator.broadcast("testing, hei hei")
+        self.controller.communicator.broadcast("testing11, hei hei")
+        self.controller.communicator.broadcast("testing2222, hei hei")
         e = Elevator()
-        self.communicator.sendToElevator(e, "message testings over tcp")
+        self.controller.communicator.sendToElevator(e, "message testings over tcp")
+        self.controller.communicator.sendToElevator(e, "T01D05")
 
-    def setManagerState(self, state):
-        self.managerState = state
-
-    def setDispatcher(self):
-        self.controller.setIsDispatcher(True)
-        print "we are now the manager, Wohoo!"
 
