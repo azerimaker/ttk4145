@@ -2,6 +2,7 @@ from TCPReciever import TCPReceiver
 from TCPSender import TCPSender
 from UDPReceiver import UDPReceiver
 from UDPSender import UDPSender
+import pickle
 
 __author__ = 'kiro'
 
@@ -27,16 +28,14 @@ class Communicator():
         self.dataStore = dataStore
 
     # sends a message to one specific elevator.
-    def sendToElevator(self, elevator, message):
-        self.TCPSender.send(message)
-        #sender = TCPSender(elevator.IP, elevator.PORT)
-        #sender.send(message)
+    def sendToOne(self, peer, message):
+        self.TCPSender.send(peer.IP, pickle.dumps(message))
 
     # Sends messages to all the elevators registered in this instance.
-    def sendToAllElevators(self, message):
-        for elevator in self.dataStore.getElevators():
-            self.sendToElevator(elevator, message)
+    def sendToAll(self, peerList, message):
+        for peer in peerList:
+            self.sendToOne(peer, message)
 
     # broadcasts messages on UDP, do not expect that It will arrive.
     def broadcast(self, message):
-        self.UDPSender.send(message)
+        self.UDPSender.send(pickle.dumps(message))

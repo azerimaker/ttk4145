@@ -1,7 +1,8 @@
 from time import sleep
 from Controller import Controller
-from Elevator import Elevator
+from Message import Message
 from MessageHandler import MessageHandler
+from Peer import Peer
 
 __author__ = 'kiro'
 
@@ -18,22 +19,13 @@ class Main():
 
         ## test code.
         print "--------------"
-        print "start testing"
         sleep(2)
-        self.controller.communicator.broadcast("HelloWorld")
-        self.controller.communicator.broadcast("StillAlive")
-        self.controller.communicator.broadcast("Obstructed")
-        self.controller.communicator.broadcast("newManager")
-        e = Elevator()
-        #self.controller.communicator.sendToElevator(e, "message testings over tcp")
-        self.controller.communicator.sendToElevator(e, "T01D05")
-        self.controller.communicator.sendToElevator(e, "T01D--")
-        self.controller.communicator.sendToElevator(e, "T01-05")
-        self.controller.communicator.sendToElevator(e, "do09D")
-        self.controller.communicator.sendToElevator(e, "do05U")
-        self.controller.communicator.sendToElevator(e, "fin09D")
-        self.controller.communicator.sendToElevator(e, "fin05U")
+        print "testing start"
 
+        peer = Peer()
+        message = Message()
+        self.controller.communicator.sendToOne(peer, message)
 
-
-
+        print "testing complete"
+        print "--------------"
+        exit()

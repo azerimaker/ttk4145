@@ -14,8 +14,8 @@ class DataStore():
 
         print "DataStore Initialized"
 
-    def addElevator(self, elevator):
-        self.elevatorList.append(elevator)
+    def addPeer(self, peer):
+        self.elevatorList.append(peer)
         print "adds a new elevator to the list of elevators. this is necessary for delegating work later. "
 
     def newWork(self, work, ip):

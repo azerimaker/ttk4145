@@ -28,15 +28,14 @@ class TCPSender:
         print "\t target IP:", self.recipientHost
         print "\t target port:", self.recipientPort
 
-    def send(self, message):
+    def send(self, ip, message):
 
         #print "message:", message
 
         sock = socket(AF_INET, SOCK_STREAM)
-        sock.connect((self.recipientHost, self.recipientPort))
+        sock.connect((ip, self.recipientPort))
 
         sock.send(message)
-        #sock.send( message, (self.recipientHost, self.recipientPort) )
 
         sock.close()
 

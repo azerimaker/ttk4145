@@ -27,11 +27,19 @@ class Controller():
     def getDataStore(self):
         return self.dataStore
 
-    def newOrder(self):
+
+    def newOrder(self, message):
         print "new Order, not impl"
 
-    def doWork(self, order):
-        print order
+    def orderComplete(self, message):
+        print ""
+
+    def updateOrders(self, message):
+        print ""
+
+    def updateStatus(self, message):
+        print ""
+
 
     def setElevatorState(self, state, ip):
         self.dataStore.setElevatorState(state,ip)

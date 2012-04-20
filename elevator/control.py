@@ -13,7 +13,7 @@ NO_FLOORS = 4
                         
 from time import time
 import constants
-from peer import Peer
+from Peer import Peer
 
 # TODO: 
 class Control:

@@ -8,6 +8,14 @@ update_state = [type:UPDATESTATE, ip:[ip of sender], floor:null, direction:null,
 '''
 
 
+'''
+messageTypes:
+    newOrder
+    orderComplete
+    updateOrders
+    updateStatus
+'''
+
 class Message:
     
     def __init__(self, message_type, ip, floor, direction, orders, state):
