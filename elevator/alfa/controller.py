@@ -1,9 +1,6 @@
 
 class Control:
 
-    '''
-    Initialize the control object
-    '''
     def __init__(self, ip, status, dispatcher):
         self.job_list = [[0 for x in range(NO_FLOORS)] for x in range(2)] # direction is one dimension, no. floors the other
         self.peers = {} # store peer objects, with IP as key       

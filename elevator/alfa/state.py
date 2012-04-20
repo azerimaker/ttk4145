@@ -7,9 +7,10 @@ class State:
         self.stopped = ""       # True/False
         self.running = ""       # True/False
         self.doors_open = ""    # True/False
+        self.at_floor = ""      # True/False, does the driver give this information? how? 
         
     def __str__(self):
-        
+        'Returns a string representation of the state object'
         direction = ""
         if self.direction == 1:
             direction = "DOWN"
