@@ -27,7 +27,7 @@ class DataStore():
     def getWork(self):
         return self.workTable
 
-    def workDone(self, command):
+    def workComplete(self, command):
         # TODO remove work from correct list.
         print "removing work from global"
 

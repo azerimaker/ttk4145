@@ -54,17 +54,22 @@ class MessageHandler():
             # new elevator in the network
             e = Elevator(ip, port, command[0], False, )
             self.controller.getDataStore().addElevator(e)
+        #
         elif re.match(newOrder, command):
             self.controller.newWork(newOrder, ip)
             print newOrder
+        #
         elif re.match(stillAlive, command):
             print "Alive"
+        #
         elif re.match(jobComplete, command):
-            self.controller.workDone(command)
+            self.controller.dataStore.workComplete(command)
+        #
         elif re.match(obstructed, command):
             if self.controller.isDispatcher:
                 print "manager is obstructed"
             print command
+        #
         elif re.match(elevatorState, command):
             self.controller.setElevatorState(elevatorState, ip)
 
@@ -73,11 +78,15 @@ class MessageHandler():
                 print "MANAGER STATE"
 
             print elevatorState
+        #
         elif re.match(newManager, command):
             self.controller.setManager(newManager)
+        #
         elif re.match(workOrder, command):
             self.controller.doWork(command)
             print workOrder
+        #
         else:
             print "Command not valid! - " + ip + ":" + str(port) + " com: " + command
+        #
         print command
