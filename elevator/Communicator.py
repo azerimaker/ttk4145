@@ -10,7 +10,7 @@ class Communicator():
 
     elevators = []
 
-    def __init__(self, messageHandler, dataStore):
+    def __init__(self, messageHandler):
 
         # the tcp listener, that handles incoming connections on tcp.
         self.TCPReceiver = TCPReceiver("", 0, messageHandler)
@@ -23,9 +23,6 @@ class Communicator():
         # the tcp and udp senders.
         self.TCPSender = TCPSender("", 0)
         self.UDPSender = UDPSender()
-
-        # the DataStore that contains the elevators and the work list.
-        self.dataStore = dataStore
 
     # sends a message to one specific elevator.
     def sendToOne(self, peer, message):

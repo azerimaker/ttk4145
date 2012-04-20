@@ -1,20 +1,18 @@
 from Communicator import Communicator
 
-class Control:
+class Controller:
 
     def getMyIP(self):
         import socket
         return socket.gethostbyname(socket.gethostname())
 
-    def __init__(self, messageHandler, status, dispatcher):
-
-        self.communicator = Communicator(messageHandler, self)
+    def __init__(self, dispatcher=False):
 
         self.job_list = [[0 for x in range(NO_FLOORS)] for x in range(2)] # direction is one dimension, no. floors the other
         self.peers = {} # store peer objects, with IP as key       
         self.dispatcher = dispatcher
         self.id = self.getMyIP()
-        self.status = status
+        self.status = ""
         self.elevator = Elevator() # this object should handle the interface with the driver and keep track of elevator state
         
         
