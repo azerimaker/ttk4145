@@ -1,3 +1,6 @@
+from Constants import *
+from State import State
+
 class Elevator:
 
     UP = 1
@@ -5,7 +8,7 @@ class Elevator:
     NONE = 0
     
     def __init__(self):
-        # TODO: this class should implement functionaltity for interfacing with the driver
+        # TODO: this class should implement functionality for interfacing with the driver
         # TODO: update both state object and physical elevator
         self.state = State()
         self.stops = [] # list of floors to stop on
@@ -18,14 +21,14 @@ class Elevator:
         if self.state.obstructed or self.state.doors_open or self.state.stopped:
             print self.state
         else:
-            if state.at_floor:
-                call_up = orders[UP][self.state.floor] == self.id
-                call_down = orders[DOWN][self.state.floor] == self.id
+            if self.state.at_floor:
+                call_up = self.orders[UP][self.state.floor] == self.id
+                call_down = self.orders[DOWN][self.state.floor] == self.id
                 calls_over = False
                 calls_under = False
                 for direction in range(2):
                     for floor in range(NO_FLOORS):
-                        if orders[direction][floor] == self.id:
+                        if self.orders[direction][floor] == self.id:
                             if floor > self.state.floor:
                                 calls_over = True
                             elif floor < self.state.floor:
@@ -45,14 +48,14 @@ class Elevator:
                     self.state.direction = NONE
                 
                  
-        print state
+        print self.state
         
     def update_physical(self):
         # TODO: send commands to physical elevator
         print ""
     
     def floor_stop(self):
-        'Stop elevator to let people on or off'
+        #Stop elevator to let people on or off
         self.state.doors_open = True
         # TODO: new thread that waits DOOR_OPEN_TIME before starting the elevator again
         # in thread; while still waiting, or obstructed, sleep
