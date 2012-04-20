@@ -31,9 +31,10 @@ class TCPSender:
     def send(self, ip, message):
 
         #print "message:", message
+        print "sendIP= " + ip
 
         sock = socket(AF_INET, SOCK_STREAM)
-        sock.connect((ip, self.recipientPort))
+        sock.connect((self.recipientHost, self.recipientPort))
 
         sock.send(message)
 
@@ -43,5 +44,5 @@ class TCPSender:
         print "broadcasting on tcp NOT Implemented"
 
 # test code for running only this file.
-#a = TCPSender("78.91.6.84")
-#a.send("testing")
+#a = TCPSender("78.91.5.10")
+#a.send("78.91.5.10", "heuh hue")

@@ -97,6 +97,7 @@ class Controller:
         print ""
 
     def stillAlive(self, message, time):
+        ## keep track of the peers in the network. aka peerList updater.
         # TODO
         print ""
 

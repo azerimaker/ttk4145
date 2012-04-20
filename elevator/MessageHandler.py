@@ -30,7 +30,7 @@ class MessageHandler():
             print "updateStatus"
         elif message.type == "imAlive":
             self.controller.stillAlive(message, time())
-            print "imAlive"
+            print "stillAlive"
         else:
             print "you are an idiot, message type not found."
 
