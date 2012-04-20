@@ -1,5 +1,5 @@
 from time import sleep
-from Controller import Controller
+from Controller_old import Controller
 from Message import Message
 from MessageHandler import MessageHandler
 from Peer import Peer
@@ -17,6 +17,8 @@ class Main():
 
         print "MAIN initialize"
 
+
+
         ## test code.
         print "--------------"
         sleep(2)
@@ -29,3 +31,5 @@ class Main():
         print "testing complete"
         print "--------------"
         exit()
+
+Main()

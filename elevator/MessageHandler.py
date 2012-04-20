@@ -1,4 +1,5 @@
 import pickle
+from time import time
 
 __author__ = 'kiro'
 
@@ -27,6 +28,9 @@ class MessageHandler():
         elif message.type == "updateStatus":
             self.controller.updateStaturs(message)
             print "updateStatus"
+        elif message.type == "imAlive":
+            self.controller.stillAlive(message, time())
+            print "imAlive"
 
 
 

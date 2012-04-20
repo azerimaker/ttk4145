@@ -14,6 +14,7 @@ messageTypes:
     orderComplete
     updateOrders
     updateStatus
+    imAlive
 '''
 
 class Message:

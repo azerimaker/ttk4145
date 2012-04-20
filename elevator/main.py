@@ -1,3 +1,0 @@
-import initialize
-
-initialize.main()
