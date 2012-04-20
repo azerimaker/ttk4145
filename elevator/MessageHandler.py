@@ -31,7 +31,7 @@ class MessageHandler():
         stillAlive = re.compile("StillAlive")
 
         # broadcast to everyone.
-        jobComplete = re.compile("------")
+        jobComplete = re.compile("fin[0-9][0-9][UD]")
 
         # broadcast to everyone.
         obstructed = re.compile("Obstructed")
@@ -40,19 +40,19 @@ class MessageHandler():
         elevatorState = re.compile("[TF]"+"[0-9][0-9]"+"[UD-]"+"[0-9-][0-9-]")
 
         # broadcast to everyone, comes from the new manager.
-        newManager = re.compile("------")
+        newManager = re.compile("newManager")
 
         # receive from manager elevator
-        workOrder = re.compile("------")
+        workOrder = re.compile("do[0-9][0-9][UD]")
 
         ## end MESSAGES
 
-        print "----------------"
+        print "!----------------"
         print "message sorting"
         # command sorter.
         if re.match(helloWorld, command):
             # new elevator in the network
-            e = Elevator(ip, port, command, False, )
+            e = Elevator(ip, port, command, False)
             self.controller.getDataStore().addElevator(e)
             print "HaloWorld -conf"
         #
@@ -93,3 +93,4 @@ class MessageHandler():
             print "Command not valid! - " + ip + ":" + str(port) + " com: " + command + " :comEnd:"
         #
         print command
+        print "-------------!"
