@@ -7,8 +7,8 @@ DIRECTION = 'UP'            # U or D; direction elevator is moving
 CURRENT_FLOOR = 3           # elevators current floor and direction
 STOP_NEXT = False           # should elevator stop on next floor?
 ELEVATORS = {}
-DOWN = 0
-UP = 1
+DOWN = 1
+UP = 0
 NO_FLOORS = 4
                         
 from time import time
@@ -75,7 +75,7 @@ class Control:
     def find_new_dispatcher(self, dead_peers):
         elder = self
         for peer_id, peer in self.peers.iteritems():
-            if peer in dead_peers:
+            if peer in dead_peers or peer.state == "OBSTRUCTED":
                 continue
             if peer.id > elder.id:
                 elder = peer
@@ -106,6 +106,7 @@ class Control:
         for peer_id, peer in self.peers.iteritems():
             print peer_id, peer.status
         self.check_others()
+        
         
         
         

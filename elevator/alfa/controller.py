@@ -1,3 +1,4 @@
+
 class Control:
 
     '''
@@ -9,6 +10,7 @@ class Control:
         self.dispatcher = dispatcher
         self.id = ip
         self.status = status
+        self.elevator = Elevator() # this object should handle the interface with the driver and keep track of elevator state
         
         
     '''        
