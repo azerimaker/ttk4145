@@ -34,12 +34,12 @@ class MessageHandler():
         jobComplete = re.compile("------")
 
         # broadcast to everyone.
-        obstructed = re.compile("------")
+        obstructed = re.compile("Obstructed")
 
         # broadcast to everyone.
         elevatorState = re.compile("[TF]"+"[0-9][0-9]"+"[UD-]"+"[0-9-][0-9-]")
 
-        # broadcast to everyone
+        # broadcast to everyone, comes from the new manager.
         newManager = re.compile("------")
 
         # receive from manager elevator
@@ -54,23 +54,23 @@ class MessageHandler():
             # new elevator in the network
             e = Elevator(ip, port, command, False, )
             self.controller.getDataStore().addElevator(e)
-            print "HaloWorld"
+            print "HaloWorld -conf"
         #
         elif re.match(newOrder, command):
             self.controller.newWork(newOrder, ip)
-            print "NewOrder"
+            print "NewOrder -conf"
         #
         elif re.match(stillAlive, command):
-            print "Alive"
+            print "Alive -conf"
         #
         elif re.match(jobComplete, command):
             self.controller.dataStore.workComplete(command)
-            print "work complete"
+            print "work complete -conf"
         #
         elif re.match(obstructed, command):
             if self.controller.isDispatcher:
-                print "manager is obstructed"
-            print command
+                print "manager is "
+            print "obstructed - conf"
         #
         elif re.match(elevatorState, command):
             self.controller.setElevatorState(command, ip)
@@ -79,15 +79,15 @@ class MessageHandler():
             if command[0] == "T":
                 print "MANAGER STATE"
 
-            print "elevator state!"
+            print "elevator state! - conf"
         #
         elif re.match(newManager, command):
             self.controller.setManager(ip)
-            print "new Manager"
+            print "new Manager - conf"
         #
         elif re.match(workOrder, command):
             self.controller.doWork(command)
-            print "work order"
+            print "work order -conf"
         #
         else:
             print "Command not valid! - " + ip + ":" + str(port) + " com: " + command + " :comEnd:"

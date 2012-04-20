@@ -20,9 +20,9 @@ class Main():
         print "--------------"
         print "start testing"
         sleep(2)
-        self.controller.communicator.broadcast("testing, hei hei")
-        self.controller.communicator.broadcast("testing11, hei hei")
-        self.controller.communicator.broadcast("testing2222, hei hei")
+        self.controller.communicator.broadcast("HelloWorld")
+        self.controller.communicator.broadcast("StillAlive")
+        self.controller.communicator.broadcast("Obstructed")
         e = Elevator()
         #self.controller.communicator.sendToElevator(e, "message testings over tcp")
         self.controller.communicator.sendToElevator(e, "T01D05")
