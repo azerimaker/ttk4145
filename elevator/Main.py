@@ -12,13 +12,10 @@ __author__ = 'kiro'
 class Main():
 
     def __init__(self):
-        #self.manager = Manager()
-        self.dataStore = DataStore()
-        self.controller = Controller(self.dataStore)
+        self.controller = Controller()
         self.messageHandler = MessageHandler(self, self.controller)
         self.communicator = Communicator(self.messageHandler, self.dataStore)
-        #self.elevatorControl = ElevatorControl()
-
+        
         print "MAIN initialize"
 
         ## test code.

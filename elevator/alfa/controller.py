@@ -1,21 +1,3 @@
-GLOBAL_GOING_UP = set()     # set to hold list of all jobs up
-GLOBAL_GOING_DOWN = set()   # set to hold list of all jobs down
-GOING_UP = set()            # set to hold this elevators jobs going up
-GOING_DOWN = set()          # set to hold this elevators jobs going down
-CURRENT_JOBS = set()        # set to hold this elevators current jobs
-DIRECTION = 'UP'            # U or D; direction elevator is moving
-CURRENT_FLOOR = 3           # elevators current floor and direction
-STOP_NEXT = False           # should elevator stop on next floor?
-ELEVATORS = {}
-DOWN = 0
-UP = 1
-NO_FLOORS = 4
-                        
-from time import time
-import constants
-from peer import Peer
-
-# TODO: 
 class Control:
 
     '''
@@ -27,15 +9,8 @@ class Control:
         self.dispatcher = dispatcher
         self.id = ip
         self.status = status
-    
-    '''
-    when passing a floor, check if there are people waiting on the next floor
-    if there are, raise flag so the elevator stops when reaching the floor
-    '''
-    def check_next_floor(self):
-        if CURRENT_FLOOR+1 in CURRENT_JOBS:
-            STOP_NEXT = True
-   
+        
+        
     '''        
     check to see if other elevators have problems
     if an elevator has timed out, delete from list
@@ -57,17 +32,8 @@ class Control:
         elif dispatcher_dead:
             self.find_new_dispatcher(dead_peers)
             print "Dispatcher is dead, need to find new"
-                    
-                
-    '''
-    listen for other elevators
-    add these to system overview
-    '''            
-    def listen(self):
-        # TODO: networking class takes care of this
-        print "nein"
-        
-
+            
+    
     '''
     Method to decide which elevator becomes dispatcher
     if dispatcher has died. Highest IP (id) is dispatcher
@@ -83,8 +49,8 @@ class Control:
             self.become_dispatcher(dead_peers)
         else:
             print "New dispatcher is ", elder.id
+            
 
-    
     '''
     Turns this elevator into dispatcher
     '''
@@ -92,23 +58,8 @@ class Control:
         self.dispatcher = True
         print "This elevator is now dispatcher.\nRedistributing jobs of dead peers"
         self.redistribute_jobs(dead_peers)
-        # TODO: set relevant datafields in dispatcher object
-        # TODO: stop control loop, give control to dispatcher
-        
-    
-    
-    '''
-    Start the elevator
-    '''
-    def start(self):
-        # TODO:
-        print "Elevator started... await status report"
-        for peer_id, peer in self.peers.iteritems():
-            print peer_id, peer.status
-        self.check_others()
-        
-        
-        
+
+
     '''
     setup elevator to be ready
     '''
@@ -123,7 +74,9 @@ class Control:
 #        networking.set_peers(peers) # give networking thread the list of peers so that it can update them
 #        networking.broadcast_existence()
         self.start()
-    
+
+
+
 #################################
 ##### DISPATCHER METHODS ########
 #################################
@@ -210,8 +163,6 @@ class Control:
         message = Job_list_message(job_list)
         for peer_id, peer in peers.iteritems():
             peer.send_message(message)
-        
-        
-        
-            
-        
+
+    def receive_order(order):
+        if order
