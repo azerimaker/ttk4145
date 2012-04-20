@@ -1,5 +1,6 @@
 import threading
 from time import sleep
+from Communicator import Communicator
 from DataStore import DataStore
 
 __author__ = 'kiro'
@@ -11,9 +12,10 @@ __author__ = 'kiro'
 
 class Controller():
 
-    def __init__(self, dataStore):
+    def __init__(self, messageHandler):
 
-        self.dataStore = dataStore
+        self.dataStore = DataStore()
+        self.communicator = Communicator(messageHandler, self)
         self.isDispatcher = False
         self.lastState = "F-----"
 

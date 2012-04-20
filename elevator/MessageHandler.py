@@ -1,75 +1,83 @@
+from time import sleep
 from Elevator import Elevator
+import re
 
 __author__ = 'kiro'
 
 class MessageHandler():
 
-    def __init__(self, main, controller):
-        self.main = main
+    def __init__(self, controller=""):
         self.controller = controller
 
         print "MessageHandler initialized"
+
+    def setController(self, controller):
+        self.controller = controller
 
     def evaluateCommand(self, ip, port, command):
         ## MESSAGES
 
         # message format
-        # "elevator" + "direction" + "floor"
-        # "[1-9][1-9]" + "[UD]" + "[1-9][1-9]"
+        # "dispatcher" + "elevator" + "direction" + "floor"
+        #pattern= re.compile("[TF]"+"[0-9][0-9]"+"[UD]"+"[0-9][0-9]")
 
         #broad cast to everyone
-        helloWorld = ""
+        helloWorld = re.compile("HelloWorld")
 
         # broadcast to all
-        newOrder = ""
+        newOrder = re.compile("newOrder")
 
         # broadcast to everyone.
-        stillAlive = ""
+        stillAlive = re.compile("StillAlive")
 
         # broadcast to everyone.
-        jobDone = ""
+        jobComplete = re.compile("")
 
         # broadcast to everyone.
-        obstructed = ""
+        obstructed = re.compile("")
 
         # broadcast to everyone.
-        elevatorState = ""
+        elevatorState = re.compile("")
 
         # broadcast to everyone
-        newManager = ""
+        newManager = re.compile("")
 
         # receive from manager elevator
-        workOrder = ""
+        workOrder = re.compile("")
 
         ## end MESSAGES
 
+        print "----------------"
+        print "message sorting"
         # command sorter.
-        if command == helloWorld:
+        if re.match(helloWorld, command):
             # new elevator in the network
             e = Elevator(ip, port, command[0], False, )
-            self.controller.addElevator(e)
-        elif command == newOrder:
+            self.controller.getDataStore().addElevator(e)
+        elif re.match(newOrder, command):
             self.controller.newWork(newOrder, ip)
             print newOrder
-        elif command == stillAlive:
-            # if you do not get a reply from the manager in 3 seconds, the oldest elevator still responding takes over.
-            if state[0] == "T":
-                self.main.setManagerState()
-            e = self.controller.getElevator(ip)
-            e.setStatus(command)
-        elif command == jobDone:
+        elif re.match(stillAlive, command):
+            print "Alive"
+        elif re.match(jobComplete, command):
             self.controller.workDone(command)
-        elif command == obstructed:
-            if self.main.isManager:
+        elif re.match(obstructed, command):
+            if self.controller.isDispatcher:
                 print "manager is obstructed"
             print command
-        elif command == elevatorState:
+        elif re.match(elevatorState, command):
             self.controller.setElevatorState(elevatorState, ip)
+
+            # if you do not get a reply from the manager in 3 seconds, the oldest elevator still responding takes over.
+            if command[0] == "T":
+                print "MANAGER STATE"
+
             print elevatorState
-        elif command == newManager:
+        elif re.match(newManager, command):
             self.controller.setManager(newManager)
-        elif command == workOrder:
-            self.controller.doWork(workOrder)
+        elif re.match(workOrder, command):
+            self.controller.doWork(command)
             print workOrder
         else:
             print "Command not valid! - " + ip + ":" + str(port) + " com: " + command
+        print command

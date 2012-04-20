@@ -1,8 +1,5 @@
-import socket
-from Communicator import Communicator
-from DataStore import DataStore
+import re
 from Main import Main
-from MessageHandler import MessageHandler
 
 __author__ = 'kiro'
 
@@ -10,7 +7,11 @@ __author__ = 'kiro'
 main = Main()
 
 
-#def get_local_address():
-#    return socket.gethostbyname(socket.gethostname())
-
-#print socket.gethostbyname(socket.gethostname())
+"""
+pattern = re.compile("[TF]"+"[0-9][0-9]"+"[UD]"+"[0-9][0-9]")
+print pattern
+string = "T01D04"
+string2 = "F01D04"
+print re.match(pattern, string)
+print re.match(pattern, string2)
+"""
