@@ -24,7 +24,9 @@ class Main():
         self.controller.communicator.broadcast("testing11, hei hei")
         self.controller.communicator.broadcast("testing2222, hei hei")
         e = Elevator()
-        self.controller.communicator.sendToElevator(e, "message testings over tcp")
+        #self.controller.communicator.sendToElevator(e, "message testings over tcp")
         self.controller.communicator.sendToElevator(e, "T01D05")
+        self.controller.communicator.sendToElevator(e, "T01D--")
+        self.controller.communicator.sendToElevator(e, "T01-05")
 
 

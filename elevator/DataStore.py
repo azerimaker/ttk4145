@@ -1,3 +1,5 @@
+from Elevator import Elevator
+
 __author__ = 'kiro'
 
 #this class holds the elevators for this instance and all the work for all elevators.
@@ -41,5 +43,9 @@ class DataStore():
 
     def setElevatorState(self, state, ip):
         e = self.getElevator(ip)
-        e.setState(state, ip)
+        if not e:
+            if state[0] == "T":
+                e = Elevator(ip, 5005, state, True)
+            else:
+                e = Elevator(ip, 5005, state,)
 

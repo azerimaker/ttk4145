@@ -33,6 +33,9 @@ class Controller():
     def doWork(self, order):
         print order
 
+    def setElevatorState(self, state, ip):
+        self.dataStore.setElevatorState(state,ip)
+
     def setDispatcher(self, ip):
         self.dispatcher = ip
 

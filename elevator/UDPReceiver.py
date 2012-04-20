@@ -34,7 +34,10 @@ class UDPReceiver( threading.Thread ):
 
         while True:
             data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
-            print "received message:", data
+#            print "received message:", data
+            ip = sock.getsockname()[0]
+            port = sock.getsockname()[1]
+            self.messageHandler.evaluateCommand(ip, port, data)
 
 # test code for running only this file.
 #a = UDPReceiver(5005)

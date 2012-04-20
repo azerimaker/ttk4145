@@ -51,13 +51,13 @@ class TCPReceiver( threading.Thread ):
         while 1:
             # Accept connections
             connection, address = sock.accept()
-            print 'Connection accepted from %s' % str(address)
+#            print 'Connection accepted from %s' % str(address)
             # Receive data
             while 1:
                 data = connection.recv(2 ** 16)
                 ip = connection.getsockname()[0]
                 port = connection.getsockname()[1]
-                print 'Received: %s' % str(data)
+#                print 'Received: %s' % str(data)
                 self.messageHandler.evaluateCommand(ip, port, data)
                 # Acknowledge reception of data
                 #r = 'ACK\n'

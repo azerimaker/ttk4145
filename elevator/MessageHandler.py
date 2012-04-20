@@ -31,19 +31,19 @@ class MessageHandler():
         stillAlive = re.compile("StillAlive")
 
         # broadcast to everyone.
-        jobComplete = re.compile("")
+        jobComplete = re.compile("------")
 
         # broadcast to everyone.
-        obstructed = re.compile("")
+        obstructed = re.compile("------")
 
         # broadcast to everyone.
-        elevatorState = re.compile("")
+        elevatorState = re.compile("[TF]"+"[0-9][0-9]"+"[UD-]"+"[0-9-][0-9-]")
 
         # broadcast to everyone
-        newManager = re.compile("")
+        newManager = re.compile("------")
 
         # receive from manager elevator
-        workOrder = re.compile("")
+        workOrder = re.compile("------")
 
         ## end MESSAGES
 
@@ -52,18 +52,20 @@ class MessageHandler():
         # command sorter.
         if re.match(helloWorld, command):
             # new elevator in the network
-            e = Elevator(ip, port, command[0], False, )
+            e = Elevator(ip, port, command, False, )
             self.controller.getDataStore().addElevator(e)
+            print "HaloWorld"
         #
         elif re.match(newOrder, command):
             self.controller.newWork(newOrder, ip)
-            print newOrder
+            print "NewOrder"
         #
         elif re.match(stillAlive, command):
             print "Alive"
         #
         elif re.match(jobComplete, command):
             self.controller.dataStore.workComplete(command)
+            print "work complete"
         #
         elif re.match(obstructed, command):
             if self.controller.isDispatcher:
@@ -71,22 +73,23 @@ class MessageHandler():
             print command
         #
         elif re.match(elevatorState, command):
-            self.controller.setElevatorState(elevatorState, ip)
+            self.controller.setElevatorState(command, ip)
 
             # if you do not get a reply from the manager in 3 seconds, the oldest elevator still responding takes over.
             if command[0] == "T":
                 print "MANAGER STATE"
 
-            print elevatorState
+            print "elevator state!"
         #
         elif re.match(newManager, command):
-            self.controller.setManager(newManager)
+            self.controller.setManager(ip)
+            print "new Manager"
         #
         elif re.match(workOrder, command):
             self.controller.doWork(command)
-            print workOrder
+            print "work order"
         #
         else:
-            print "Command not valid! - " + ip + ":" + str(port) + " com: " + command
+            print "Command not valid! - " + ip + ":" + str(port) + " com: " + command + " :comEnd:"
         #
         print command
