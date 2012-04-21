@@ -27,7 +27,7 @@ class Main():
         sleep(2)
         print "testing start"
 
-        peer = Peer("127.0.0.1")
+        peer = Peer("78.91.5.10")
         message = Message("stillAlive", peer.IP, "", "", "", "")
 
         self.communicator.broadcast(message)

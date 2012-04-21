@@ -34,7 +34,7 @@ class TCPSender:
         print "sendIP= " + ip
 
         sock = socket(AF_INET, SOCK_STREAM)
-        sock.connect((self.recipientHost, self.recipientPort))
+        sock.connect((ip, self.recipientPort))
 
         sock.send(message)
 
@@ -45,4 +45,4 @@ class TCPSender:
 
 # test code for running only this file.
 #a = TCPSender("78.91.5.10")
-#a.send("78.91.5.10", "heuh hue")
+#a.send("78.91.21.180", "testing")
