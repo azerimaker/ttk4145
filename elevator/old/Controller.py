@@ -18,7 +18,7 @@ class Controller:
         self.dispatcher = dispatcher
         self.id = self.getMyIP()
         self.status = ""
-        self.elevator = Elevator(self) # this object should handle the interface with the driver and keep track of elevator state
+        self.elevator = Elevator() # this object should handle the interface with the driver and keep track of elevator state
         
     def check_others(self):
         '''
@@ -80,14 +80,9 @@ class Controller:
 #        networking.set_peers(peers) # give networking thread the list of peers so that it can update them
 #        networking.broadcast_existence()
 
-    def newOrder(self, floor, direction):
+    def newOrder(self, message):
         # TODO
-        print "new Order, not impl", floor, direction
-        peer = Peer("129.241.187.145")
-        
-        message = Message("newOrder", peer.IP, floor, direction)
-        #self.communicator.sendToOne(peer, message)
-        #self.communicator.broadcast(message)
+        print "new Order, not impl"
 
     def orderComplete(self, message):
         # TODO

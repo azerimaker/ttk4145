@@ -1,6 +1,5 @@
 from socket import *
 import time
-import pickle
 
 __author__ = 'kiro'
 
@@ -28,13 +27,13 @@ class UDPSender:
         s.bind(('', 0))
         s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-        s.sendto(pickle.dumps(message), ('<broadcast>', self.UDP_PORT))
+        s.sendto(message, ('<broadcast>', self.UDP_PORT))
 
 # test code for running only this file.
 
-a = UDPSender()
-a.send("testing")
-a.send("testing1")
-a.send("testing2")
-a.send("testing3")
+#a = UDPSender()
+#a.send("testing")
+#a.send("testing1")
+#a.send("testing2")
+#a.send("testing3")
 

@@ -4,7 +4,6 @@
 from socket import *
 import threading
 from MessageHandler import MessageHandler
-from time import sleep
 
 __author__ = 'kiro'
 
@@ -43,36 +42,29 @@ class TCPReceiver( threading.Thread ):
         print "\t target port:", self.serverPort
 
     def run(self):
-        try:
-            # Open socket to listen on
-            sock = socket(AF_INET, SOCK_STREAM)
-            sock.bind((self.serverHost, self.serverPort))
-            sock.listen(1024)
+        # Open socket to listen on
+        sock = socket(AF_INET, SOCK_STREAM)
+        sock.bind((self.serverHost, self.serverPort))
+        sock.listen(1024)
 
-            # Process connections
+        # Process connections
+        while 1:
+            # Accept connections
+            connection, address = sock.accept()
+#            print 'Connection accepted from %s' % str(address)
+            # Receive data
             while 1:
-                # Accept connections
-                connection, address = sock.accept()
-    #            print 'Connection accepted from %s' % str(address)
-                # Receive data
-                try:
-                    data = connection.recv(2 ** 16)
-                    ip = connection.getsockname()[0]
-                    port = connection.getsockname()[1]
-                    print "incoming: ", ip
-                    print 'Received: %s' % str(data)
-                    sleep(1)
-                    self.messageHandler.evaluateCommand(ip, port, data)
-                    # Acknowledge reception of data
-                    r = 'ACK\n'
-                    #connection.send(r)
-                    connection.close()
-                except error:
-                    print error
-        except error:
-            print error
-            exit(1)
+                data = connection.recv(2 ** 16)
+                ip = connection.getsockname()[0]
+                port = connection.getsockname()[1]
+                print 'Received: %s' % str(data)
+#                self.messageHandler.evaluateCommand(ip, port, data)
+                # Acknowledge reception of data
+                #r = 'ACK\n'
+                #connection.send(r)
+                connection.close()
+                break
 
 # test code for running only this file.
-#a = TCPReceiver("129.241.187.145")
+#a = TCPReceiver("78.91.5.10")
 #a.run()

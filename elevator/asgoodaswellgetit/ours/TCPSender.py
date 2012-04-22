@@ -1,6 +1,4 @@
 from socket import *
-from Message import Message
-import pickle
 
 __author__ = 'kiro'
 
@@ -31,26 +29,20 @@ class TCPSender:
         print "\t target port:", self.recipientPort
 
     def send(self, ip, message):
-        try:
-            #print "message:", message
-            print "sendIP= " + ip
 
-            sock = socket(AF_INET, SOCK_STREAM)
-            sock.connect((ip, self.recipientPort))
+        #print "message:", message
+        print "sendIP= " + ip
 
-            sock.send(pickle.dumps(message))
+        sock = socket(AF_INET, SOCK_STREAM)
+        sock.connect((ip, self.recipientPort))
 
-            sock.close()
-        except error:
-            print error
-            socket.close()
-            exit(1)
+        sock.send(message)
 
+        sock.close()
 
     def broadcast(self, message):
         print "broadcasting on tcp NOT Implemented"
 
 # test code for running only this file.
-#a = TCPSender("129.241.187.145")
-#message = Message("testing")
-#a.send("129.241.187.145", message)
+#a = TCPSender("78.91.5.10")
+#a.send("78.91.21.180", "testing")

@@ -7,22 +7,17 @@ class MessageHandler():
 
     def __init__(self, controller=""):
         self.controller = controller
-        self.setup_time = time()
+
         print "MessageHandler initialized"
 
     def setController(self, controller):
         self.controller = controller
 
     def evaluateCommand(self, ip, port, message):
-        if self.controller=="":
-            return
-        
-    
-        print "handeling: ", ip
         message = pickle.loads(message)
 
         if message.type == "newOrder":
-            self.controller.newOrder(message.type, 1)
+            self.controller.newOrder(message)
             print "newOrder"
         elif message.type == "orderComplete":
             self.controller.orderComplete(message)

@@ -19,7 +19,7 @@ messageTypes:
 
 class Message:
     
-    def __init__(self, message_type="none", ip="127.0.0.1", floor="0", direction="0", orders="", state=""):
+    def __init__(self, message_type, ip, floor, direction, orders, state):
         self.type = message_type
         self.ip = ip
         self.floor = floor
