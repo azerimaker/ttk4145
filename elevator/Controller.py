@@ -12,13 +12,20 @@ class Controller:
 
     def __init__(self, communicator, dispatcher=False):
         self.communicator = communicator
-
         self.orderList = [[0 for x in range(NO_FLOORS)] for x in range(2)] # direction is one dimension, no. floors the other
         self.peerList = {} # store peer objects, with IP as key
         self.dispatcher = dispatcher
+
         self.id = self.getMyIP()
         self.status = ""
-        self.elevator = Elevator(self) # this object should handle the interface with the driver and keep track of elevator state
+        
+        self.peers = []
+        
+        # ugly hack to give the messageHandler the controller instance. 
+        self.communicator.messageHandler.setController(self)
+        # this object should handle the interface with the driver and keep track of elevator state
+        self.elevator = Elevator(self) 
+        
         
     def check_others(self):
         '''
@@ -81,13 +88,14 @@ class Controller:
 #        networking.broadcast_existence()
 
     def newOrder(self, floor, direction):
-        # TODO
-        print "new Order, not impl", floor, direction
         peer = Peer("129.241.187.145")
-        
         message = Message("newOrder", peer.IP, floor, direction)
-        #self.communicator.sendToOne(peer, message)
+        self.communicator.sendToOne(peer, message)
+#        for peer in self.peers:
+ #           message.ip = peer.IP
+  #          print peer.IP
         #self.communicator.broadcast(message)
+        
 
     def orderComplete(self, message):
         # TODO
@@ -103,13 +111,22 @@ class Controller:
 
     def stillAlive(self, message, time):
         ## keep track of the peers in the network. aka peerList updater.
-        # TODO
-        print ""
+        self.addPeer(message)
+        print "controlling stillAlive"
+        
+    def addPeer(self, message):
+        for peer in self.peers:
+            if peer.IP == message.ip:
+                return
+        self.peers.append(Peer(message.ip, "", False, time()))
+
 
 #################################
 ##### DISPATCHER METHODS ########
 #################################
 
+    def runDispather():
+        print "running the dispatcher"
 
     def find_best_suited(self, floor, direction):
         '''

@@ -1,4 +1,4 @@
-from drivertest import Elevator
+from Elevator import Elevator
 from Communicator import Communicator
 from MessageHandler import MessageHandler
 from Controller import Controller
@@ -10,7 +10,6 @@ from Peer import Peer
 messageHandler = MessageHandler()
 communicator = Communicator(messageHandler)
 controller = Controller(communicator)
-messageHandler.setController(controller)
 
 print "main"
 

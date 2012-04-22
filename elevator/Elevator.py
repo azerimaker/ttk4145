@@ -264,9 +264,13 @@ class Elevator:
                 self.state.obstructed = False
             sleep(0.3)
         driver.setChannel(OUTPUT.DOOR_OPEN, 0)
+        if self.state.floor == 1:
+            current_speed * -1
         driver.set_speed(current_speed)
         print "OBSTRUCTION cleared"
-
+        
+        # obstruction bug, when in 1.st floor, and obstruction is activated, it goes down. it should not. 
+        # the same goes for forth floor.
 
         """
         print "OBSTRCUTION!"

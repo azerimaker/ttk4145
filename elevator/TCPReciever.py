@@ -5,6 +5,8 @@ from socket import *
 import threading
 from MessageHandler import MessageHandler
 from time import sleep
+from _socket import SHUT_RD
+import pickle
 
 __author__ = 'kiro'
 
@@ -13,8 +15,11 @@ class TCPReceiver( threading.Thread ):
     serverPort = 5005
 
     def getMyIP(self):
-        import socket
-        return socket.gethostbyname(socket.gethostname())
+        s=socket(AF_INET, SOCK_DGRAM)
+        s.connect(("gmail.com",80))
+        addr = s.getsockname()[0]
+        s.close()
+        return addr
 
     def __init__(self, ip="", port=5005, messageHandler=""):
         super(TCPReceiver, self).__init__()
@@ -53,20 +58,22 @@ class TCPReceiver( threading.Thread ):
             while 1:
                 # Accept connections
                 connection, address = sock.accept()
-    #            print 'Connection accepted from %s' % str(address)
+                print 'Connection accepted from %s' % str(address)
                 # Receive data
                 try:
                     data = connection.recv(2 ** 16)
                     ip = connection.getsockname()[0]
                     port = connection.getsockname()[1]
                     print "incoming: ", ip
-                    print 'Received: %s' % str(data)
-                    sleep(1)
-                    self.messageHandler.evaluateCommand(ip, port, data)
+#                    print 'Received: %s' % str(data)
+                    print "ty: ",pickle.loads(data).type
+                    #sock.shutdown(SHUT_RD)
+#                    self.messageHandler.evaluateCommand(ip, port, data)
+                    connection.close()
                     # Acknowledge reception of data
                     r = 'ACK\n'
                     #connection.send(r)
-                    connection.close()
+
                 except error:
                     print error
         except error:

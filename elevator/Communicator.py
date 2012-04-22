@@ -8,9 +8,10 @@ __author__ = 'kiro'
 class Communicator():
 
     def __init__(self, messageHandler):
+        self.messageHandler = messageHandler
 
         # the tcp listener, that handles incoming connections on tcp.
-        self.TCPReceiver = TCPReceiver("129.241.187.145", 0, messageHandler)
+        self.TCPReceiver = TCPReceiver("", 0, messageHandler)
         self.TCPReceiver.start()
 
         # the udp listener that gets broadcasting messages.
@@ -18,7 +19,7 @@ class Communicator():
         self.UDPReceiver.start()
 
         # the tcp and udp senders.
-        self.TCPSender = TCPSender("129.241.187.145", 0)
+        self.TCPSender = TCPSender("", 0)
         self.UDPSender = UDPSender()
 
     # sends a message to one specific elevator.

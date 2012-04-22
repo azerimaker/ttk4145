@@ -4,6 +4,7 @@ from screamer import Screamer
 
 from driverextension import *
 import signal
+
 def killer(a=None,b=None):
     """Signal handler for Ctrl+C interrupt. Stops elevator before exiting."""
     try:
@@ -15,7 +16,8 @@ def killer(a=None,b=None):
 signal.signal(signal.SIGINT, killer)
 
 class Driver:
-    import driverextension
+    # imports the driver ekstensions.
+    from driverextension import *
     direction = OUTPUT.MOTOR_DOWN
     screamer = Screamer()
     def __init__(self):
@@ -25,9 +27,9 @@ class Driver:
     addListener = screamer.addListener
     readChannel = io.readBit
     setChannel = io.setBit
-    reset_all_lamps = driverextension.reset_all_lamps
-    set_door_open_lamp = driverextension.set_door_open_lamp
-    set_speed = driverextension.set_speed
+#    reset_all_lamps = driverextension.reset_all_lamps
+#    set_door_open_lamp = driverextension.set_door_open_lamp
+#    set_speed = driverextension.set_speed
 
     def setChannels(self, channels, value):
         for channel in channels:
@@ -125,39 +127,7 @@ class Driver:
         if floor !=0:
             self.setChannel(OUTPUT.FLOOR_LIGHTS[0], (floor-1)%2)
             self.setChannel(OUTPUT.FLOOR_LIGHTS[1], (floor-1)/2)
-            
-    def set_command_light(self, floor, command_buttons):
-        if floor == 1:
-            self.setChannel(OUTPUT.LIGHT_COMMAND1, command_buttons[floor-1])
-        elif floor == 2:
-            self.setChannel(OUTPUT.LIGHT_COMMAND2, command_buttons[floor-1])
-        elif floor == 3:
-            self.setChannel(OUTPUT.LIGHT_COMMAND3, command_buttons[floor-1])
-        elif floor == 4:
-            self.setChannel(OUTPUT.LIGHT_COMMAND4, command_buttons[floor-1])
-            
-    def set_call_light(self, floor, direction, value):
-        if floor == 1:
-            if direction == 0:
-                self.setChannel(OUTPUT.UP_LIGHTS[floor-1], value)
-            if direction == 1:
-                print "wrong value in call_light, trying to go down from floor 1"
-        if floor == 2:
-            if direction == 0:
-                self.setChannel(OUTPUT.UP_LIGHTS[floor-1], value)
-            if direction == 1:
-                self.setChannel(OUTPUT.DOWN_LIGHTS[floor-2], value)
-        if floor == 3:
-            if direction == 0:
-                self.setChannel(OUTPUT.UP_LIGHTS[floor-1], value)
-            if direction == 1:
-                self.setChannel(OUTPUT.DOWN_LIGHTS[floor-2], value)
-        if floor == 4:
-            if direction == 1:
-                self.setChannel(OUTPUT.DOWN_LIGHTS[floor-2], value)
-            if direction == 0:
-                print "wrong value in call_light, trying to go up from floor 4"
-            
+
 driver = Driver()
 
 if __name__ == '__main__':

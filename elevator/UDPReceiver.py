@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # Accepts connections, prints the received messages to stdout.
+from _socket import SHUT_RDWR
 
 import socket
 import threading
@@ -28,16 +29,22 @@ class UDPReceiver( threading.Thread ):
         print "\t target port:", self.UDP_PORT
 
     def run(self):
-        sock = socket.socket( socket.AF_INET, # Internet
-            socket.SOCK_DGRAM ) # UDP
-        sock.bind( (self.UDP_IP,self.UDP_PORT) )
+        try:
+            sock = socket.socket( socket.AF_INET, # Internet
+                socket.SOCK_DGRAM ) # UDP
+            sock.bind( (self.UDP_IP,self.UDP_PORT) )
 
-        while True:
-            data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
-#            print "received message:", data
-            ip = sock.getsockname()[0]
-            port = sock.getsockname()[1]
-            self.messageHandler.evaluateCommand(ip, port, data)
+            while True:
+                data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
+    #            print "received message:", data
+                ip = sock.getsockname()[0]
+                port = sock.getsockname()[1]
+                self.messageHandler.evaluateCommand(ip, port, data)
+                
+                sleep(1)
+        except socket.error:
+            print "UDPR -problem"
+            exit(1)
 
 # test code for running only this file.
 #a = UDPReceiver(5005)

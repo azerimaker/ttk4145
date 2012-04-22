@@ -49,7 +49,7 @@ class Screamer(Thread):
         callback  -- The function(channel, value) to call when the event happens.
         listento  -- A list of values to listen to.
         """
-        print 'adding listener:',channel,callback #Used for debug
+#        print 'adding listener:',channel,callback #Used for debug
         if type(channel)!=int:
             for ch in channel:
                 self.addListener(ch, callback, listento)

@@ -4,13 +4,16 @@ import pickle
 
 __author__ = 'kiro'
 
-class TCPSender:
+class TCPSender():
     recipientHost = ""
     recipientPort = 5005
 
     def getMyIP(self):
-        import socket
-        return socket.gethostbyname(socket.gethostname())
+        s=socket(AF_INET, SOCK_DGRAM)
+        s.connect(("gmail.com",80))
+        addr = s.getsockname()[0]
+        s.close()
+        return addr
 
     def __init__(self, ip="", port=5005):
         # Set the ip to default or given value.
@@ -43,14 +46,20 @@ class TCPSender:
             sock.close()
         except error:
             print error
-            socket.close()
             exit(1)
 
 
     def broadcast(self, message):
         print "broadcasting on tcp NOT Implemented"
 
+
 # test code for running only this file.
-#a = TCPSender("129.241.187.145")
-#message = Message("testing")
-#a.send("129.241.187.145", message)
+"""
+a = TCPSender("129.241.187.145")
+message = Message("testing", "129.241.187.145")
+a.send("129.241.187.145", message)
+for i in range(50):
+    message.type=i
+    a.send(message.ip, message)
+"""
+
